@@ -9,6 +9,7 @@ $encrypturl = "http://localhost:4567/crypt/";
 $decrypturl = "http://localhost:4567/decrypt/";
 $signurl = "http://localhost:4567/signature/";
 $verifyurl = "http://localhost:4567/verify/";
+$digesturl = "http://localhost:4567/digest/";
 
 if(isset($_GET['id'])) {
 	$id = $_GET['id'];
