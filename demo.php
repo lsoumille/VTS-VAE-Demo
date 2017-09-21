@@ -45,7 +45,7 @@ print "
 
 <TD>
 <div class=\"col-md-6\">
-<FORM ACTION=\"tokenize.php\" METHOD=\"POST\">
+<FORM ACTION=\"vts/tokenize.php\" METHOD=\"POST\">
 
 <BR>Input to tokenize:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
 <BR>
@@ -64,7 +64,7 @@ print "
 </FORM>
 </div>
 <div class=\"col-md-6\">
-<FORM ACTION=\"detokenize.php\" METHOD=\"POST\">
+<FORM ACTION=\"vts/detokenize.php\" METHOD=\"POST\">
 
 <BR>Input to detokenize:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
 <BR>
@@ -221,12 +221,9 @@ $passwd = $_POST['passwd'];
 if ($user == "") { $user = $_GET['user']; $passwd = $_GET['passwd']; } 
 
 $dbh = new DBHelper();
-$results = $dbh->getAllDatabase();
-//DEBUG
-$nb = 0;
+//Get only last 5 results
+$results = array_slice($dbh->getAllDatabase(), -5);
 foreach ($results as $line) {
-	if($nb++ === 5)
-		break;
 	$action = $line["action"];
 	$id = $line["id"];
 	$input = htmlspecialchars($line["input"]);

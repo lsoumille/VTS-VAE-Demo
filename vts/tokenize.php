@@ -34,21 +34,21 @@
 </header>
 
 <?php
-include "config.php";
-include "utils/DBHelper.php";
-$todetoken = $_POST['data'];
+include "../config.php";
+include "../utils/DBHelper.php";
+$totoken = $_POST['data'];
 //$name = $_POST['name'];
 $template = $_POST['template'];
 
 //The JSON data.
-$jsonData = array( 'tokengroup' => 'VTSDemoGroup', 'token' => $todetoken, 'tokentemplate' => $template);
+$jsonData = array( 'tokengroup' => 'VTSDemoGroup', 'data' => $totoken, 'tokentemplate' => $template);
 
 //Initiate cURL.
 $tok = curl_init();
 
 curl_setopt_array($tok, array(
     CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => $detokurl,
+    CURLOPT_URL => $tokurl,
     CURLOPT_POST => true,
     CURLOPT_SSL_VERIFYPEER => false,
     CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
@@ -69,18 +69,20 @@ $obj = json_decode($tok_values);
 if (strcmp($obj->status, "Succeed") !== 0)
   echo $obj->reason;
 else {
-  print $obj->data;
+  print $obj->token;
   //Commit the token in the database
   $dbh = new DBHelper();
-  $dbh->addData("Detokenization", $todetoken, $obj->data, $tokentemplate);
+  $dbh->addData("Tokenization", $totoken, $obj->token, $tokentemplate);
 
   print "
   <BR><center><font size=5>
   <B>Value Added.
   <BR><BR><BR><BR><BR><BR><BR>
   <a href=\"/demo.php?user=$user&passwd=$passwd\">Home</a>
-  <meta http-equiv='refresh' content='1;url=demo.php?user=$user&passwd=$passwd' />";
+  <meta http-equiv='refresh' content='1;url=/demo.php?user=$user&passwd=$passwd' />";
 }
 ?>
+
 </body>
 </html>
+
