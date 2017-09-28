@@ -40,7 +40,7 @@ class DBHelper {
 		$result = $connection->query($query) or die ("Query failed. Result: $result");
 		if(!isset($connection))
 			$this->closeConnection($connection);
-		return $result;
+		return $connection->insert_id;
 	}
 
 	//Add transformation into the database
@@ -57,6 +57,14 @@ class DBHelper {
 		$query = "delete from transformation where id='$id'";
 		$this->performQuery($connection, $query);
 		$this->closeConnection($connection);
+	}
+
+	public function addCustomer($tablename, $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv) {
+		$connection = $this->createConnection();
+		$query = "insert into ".$tablename." (firstname, lastname, birthDate, phoneNumber, nationality, ssn, address, city, postcode, country, cardNumber, expirationDate, cvv) values('$firstname', '$lastname', '$birthDate', '$phoneNumber', '$nationality', '$ssn', '$address', '$city', '$postcode', '$country', '$cardnumber', '$expirationdate', '$cvv')";
+		$result = $this->performQuery($connection, $query);
+		$this->closeConnection($connection);
+		return $result;
 	}
 }
 ?>

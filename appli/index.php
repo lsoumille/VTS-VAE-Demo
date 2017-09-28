@@ -34,6 +34,7 @@
     </div>
   </div>
 </header>
+<div class="row">
 <form class="form-horizontal" enctype="multipart/form-data" action="adduser.php" method="post">
 <fieldset>
 
@@ -100,20 +101,12 @@
 	  		<input id="postcode" name="postcode" type="text" placeholder="Post Code" class="form-control">
 		</div>
 	</div>
-	
+
 	<!-- Text input-->
 	<div class="form-group">
 		<label class="col-md-4 control-label" for="textinput">City</label>
 		<div class="col-md-5">
 	  		<input id="city" name="city" type="text" placeholder="City" class="form-control">
-		</div>
-	</div>
-
-	<!-- Text input-->
-	<div class="form-group">
-		<label class="col-md-4 control-label" for="textinput">Postcode</label>
-		<div class="col-md-5">
-	  		<input id="postcode" name="postcode" type="text" placeholder="Post Code" class="form-control">
 		</div>
 	</div>
 
@@ -195,6 +188,7 @@
 
 </fieldset>
 </form>
+</div>
 <script type="text/javascript">
 	//DATE PICKER
 	$(function() {

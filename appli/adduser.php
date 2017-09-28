@@ -38,8 +38,8 @@ include '../config.php';
 include '../utils/DBHelper.php';
 
 //Retrive all form data
-$name = $_POST['name'];
-$surname = $_POST['surname'];
+$firstname = $_POST['name'];
+$lastname = $_POST['surname'];
 $birthDate = $_POST['datepicker'];
 $cardNumber = $_POST['card-number'];
 $expireMonth = $_POST['expiry-month'];
@@ -53,8 +53,24 @@ $postcode = $_POST['postcode'];
 $country = $_POST['country'];
 $ssn = $_POST['ssn'];
 
-//Getting the picture
-$target_file = "../img/".$name.basename($_FILES["picture"]["name"]);
+//Converting dates
+$expiredate = $expireMonth.'/'.$expireYear;
+//First save the customer in clear
+$dbh = new DBHelper();
+$id = $dbh->addCustomer('customer_clear', $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardNumber, $expiredate, $cvv);
+
+//Create Encrypted Row
+$vaeh = new VAEHelper();
+$firstname_encrypted = $vaeh->encrypt($firstname, $encryptionKey);
+$lastname_encrypted = $vaeh->encrypt($lastname, $encryptionKey);
+$address_encrypted = $vaeh->encrypt($address, $encryptionKey);
+$city_encrypted = $vaeh->encrypt($city, $encryptionKey);
+
+$vtsh = new VTSHelper();
+
+
+//Saving the picture
+$target_file = "../img/".$id.basename($_FILES["picture"]["name"]);
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 $uploadOk = 1;
 $check = getimagesize($_FILES["picture"]["tmp_name"]);
@@ -76,7 +92,7 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["picture"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+        echo "The file ". basename( $_FILES["picture"]["name"]). " has been uploaded.";
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
