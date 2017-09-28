@@ -11,7 +11,7 @@ $signurl = "http://localhost:4567/signature/";
 $verifyurl = "http://localhost:4567/verify/";
 $digesturl = "http://localhost:4567/digest/";
 
-$encryption = "vts-key-token";
+$encryptionKey = "vts-key-token";
 
 if(isset($_GET['id'])) {
 	$id = $_GET['id'];
