@@ -1,8 +1,10 @@
 <?php 
 class VTSHelper {
-	public function tokenize($tokengroup, $data, $tokentemplate, $user, $password) {
-		$template = $_POST['template'];
 
+	const tokurl = "https://192.168.99.120/vts/rest/v2.0/tokenize";
+	const detokurl = "https://192.168.99.120/vts/rest/v2.0/detokenize";
+
+	public function tokenize($tokengroup, $data, $tokentemplate, $user, $password) {
 		//The JSON data.
 		$jsonData = array( 'tokengroup' => $tokengroup, 'data' => $data, 'tokentemplate' => $tokentemplate);
 
@@ -11,7 +13,7 @@ class VTSHelper {
 
 		curl_setopt_array($tok, array(
    			CURLOPT_RETURNTRANSFER => 1,
-    		CURLOPT_URL => $tokurl,
+    		CURLOPT_URL => self::tokurl,
     		CURLOPT_POST => true,
     		CURLOPT_SSL_VERIFYPEER => false,
     		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
@@ -45,7 +47,7 @@ class VTSHelper {
 
 		curl_setopt_array($tok, array(
     		CURLOPT_RETURNTRANSFER => 1,
-    		CURLOPT_URL => $detokurl,
+    		CURLOPT_URL => self::detokurl,
     		CURLOPT_POST => true,
     		CURLOPT_SSL_VERIFYPEER => false,
     		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
@@ -68,4 +70,5 @@ class VTSHelper {
 		else 
   			return $obj->data;
 	}
+}
 ?>

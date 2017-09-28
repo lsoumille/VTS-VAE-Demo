@@ -22,5 +22,8 @@ if ($user == "") {
 	$user = $_GET['user'];
 	$passwd = $_GET['passwd'];
 }
-?>
 
+//DEBUG
+$user = "admin";
+$passwd = "Test123!";
+?>

@@ -2,10 +2,10 @@
 class VAEHelper {
 
 	//Pin code used to access VAE library
-	private $pinCode = "Test123!";
+	const pinCode = "Test123!";
 
-	private $encrypturl = "http://localhost:4567/crypt/";
-	private $decrypturl = "http://localhost:4567/decrypt/";
+	const encrypturl = "http://localhost:4567/crypt/";
+	const decrypturl = "http://localhost:4567/decrypt/";
 
 	public function encrypt($toencrypt, $key) {
 		//The POST data.
@@ -16,7 +16,7 @@ class VAEHelper {
 
 		curl_setopt_array($tok, array(
 		    CURLOPT_RETURNTRANSFER => 1,
-		    CURLOPT_URL => $encrypturl.$pinCode,
+		    CURLOPT_URL => (self::encrypturl).(self::pinCode),
 		    CURLOPT_POST => true,
 		    CURLOPT_POSTFIELDS => $postData
 		));

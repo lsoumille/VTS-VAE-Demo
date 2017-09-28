@@ -20,7 +20,7 @@ class DBHelper {
 	public function getAllDatabase() {
 		$connection = $this->createConnection();
 		$query = "SELECT * FROM transformation order by id";
-		$array = $this->performQuery($connection, $query);
+		$array = $connection->query($query) or die ("Query failed. Result: $result");
 		$this->closeConnection($connection);
 		$rows = [];
 		while($row = mysqli_fetch_array($array))

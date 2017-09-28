@@ -36,6 +36,8 @@
 <?php
 include '../config.php';
 include '../utils/DBHelper.php';
+include '../utils/VAEHelper.php';
+include '../utils/VTSHelper.php';
 
 //Retrive all form data
 $firstname = $_POST['name'];
@@ -62,11 +64,31 @@ $id = $dbh->addCustomer('customer_clear', $firstname, $lastname, $birthDate, $ph
 //Create Encrypted Row
 $vaeh = new VAEHelper();
 $firstname_encrypted = $vaeh->encrypt($firstname, $encryptionKey);
+print "Firstname  : ".$firstname_encrypted;
 $lastname_encrypted = $vaeh->encrypt($lastname, $encryptionKey);
+print "Lastname : ".$lastname_encrypted;
 $address_encrypted = $vaeh->encrypt($address, $encryptionKey);
+print "Address : ".$address_encrypted;
 $city_encrypted = $vaeh->encrypt($city, $encryptionKey);
+print "City : ".$city_encrypted;
 
 $vtsh = new VTSHelper();
+$birthDate_tokenized = $vtsh->tokenize('VTSDemoGroup', $birthDate, 'datetemplate', $user, $passwd);
+print "birthDate  : ".$birthDate_tokenized;
+$phonenumber_tokenized = $vtsh->tokenize('VTSDemoGroup', $phoneNumber, 'phonenumber', $user, $passwd);
+print "phonenumber  : ".$phonenumber_tokenized;
+$ssn_tokenized = $vtsh->tokenize('VTSDemoGroup', $ssn, 'ssn', $user,$passwd);
+print "SSN  : ".$ssn_tokenized;
+$postcode_tokenized = $vtsh->tokenize('VTSDemoGroup', $postcode, 'phonenumber', $user, $passwd);
+print "Postcode : ".$postcode_tokenized;
+$cardnumber_tokenized = $vtsh->tokenize('VTSDemoGroup', $cardNumber, 'creditcard', $user, $passwd);
+print "cardNumber : ".$cardnumber_tokenized;
+$expiredate_tokenized = $vtsh->tokenize('VTSDemoGroup', $expiredate, 'shortdate', $user, $passwd);
+print "expiredate : ".$expiredate_tokenized;
+$cvv_tokenized = $vtsh->tokenize('VTSDemoGroup', $cvv, 'phonenumber', $user, $passwd);
+print "cvv : ".$cvv_tokenized;
+//Save the encrypted data
+$id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birthDate_tokenized, $phonenumber_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $cardnumber_tokenized, $expiredate_tokenized, $cvv_tokenized);
 
 
 //Saving the picture
