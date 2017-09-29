@@ -1,8 +1,0 @@
-. config
-template="Numeric"
-if [ $3 != "" ];
-  then
-    template=$3
-fi
-echo "Tokenizing $1 as $2 with template $template"
-curl -tlsv1.2 -k -X POST -H 'Content-Type: application/json' -u $2:$password -d '{"tokengroup" : '"$tokengroup"' , "data" : '"$1"', "tokentemplate" : '"$template"' }' https://$hostname/vts/rest/v2.0/tokenize

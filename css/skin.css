@@ -459,9 +459,8 @@ background: #415262;
 }
 
 footer{
-    text-align: right;
+    text-align: center;
     padding: 2px 20px 8px 0;
-    position: absolute;
     bottom: 0;
     right: 0;
 }
@@ -772,6 +771,20 @@ ul#admin-box{padding:0px; padding-top:30px; background:#eee; padding-bottom:30px
         
  }
 
+ #ID {
+  width: 100%;
+ }
 
+ .popup {
+  background-color: white;
+  padding: 0.5%;
+  display: none;
+  width: 20%;
+ }
+
+ .idrow:hover .popup {
+    display: block;
+    position: absolute;
+ }
 
  

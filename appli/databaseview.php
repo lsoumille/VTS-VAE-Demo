@@ -21,17 +21,31 @@
 
 <header class="container-fluid">
   <div class="row">
-    <div class="col-xs-8"> <a href="#" class="site-logo"><img src="img/v-logo.jpg"></a>
+    <div class="col-md-6"> <a href="#" class="site-logo"><img src="../vormetric-logo.png"></a>
       <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
     </div>
-    <div class="col-xs-4">
-      <ul class="list-inline pull-right rightsideIcons">
-
-        </li>
+    <div class="col-md-2">
+      <ul class="nav nav-tabs">
+        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/demo.php">Vormetric Applicative Features</a></h4></li>
       </ul>
+    </div>
+    <div class="col-md-2"> 
+      <ul class="nav nav-tabs">
+        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/appli/databaseview.php">Application Integration</h4></li>
+      </ul>
+    </div>
+    <div class="col-md-2">
+      <h4 class="list-inline pull-right rightsideIcons">
+  <?php
+    include '../config.php';
+
+    print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
+  ?>
+    </h4>
     </div>
   </div>
 </header>
+<div class="container-fluid">
 <?php
 include '../config.php';
 include '../utils/DBHelper.php';
@@ -45,14 +59,32 @@ print   "
   <TR>
   <TD bgcolor=#dddddd>ID#</TD>
   <td bgcolor=#dddddd>
-    <b>Action</b>
+    <b>Firstname</b>
     </td>
     <td bgcolor=#dddddd><b>
-      Input Data</b></td>
+      Lastname</b></td>
     <td bgcolor=#dddddd><b>
-      Output Data</b></td>
+      Birth Date</b></td>
     <td bgcolor=#dddddd><b>
-      Comments</b></td>
+      Phone Number</b></td>
+    <td bgcolor=#dddddd><b>
+      Nationality</b></td>
+    <td bgcolor=#dddddd><b>
+      SSN</b></td>
+    <td bgcolor=#dddddd><b>
+      Address</b></td>
+    <td bgcolor=#dddddd><b>
+      City</b></td>
+    <td bgcolor=#dddddd><b>
+      Postcode</b></td>
+    <td bgcolor=#dddddd><b>
+      Country</b></td>
+    <td bgcolor=#dddddd><b>
+      Card Number</b></td>
+    <td bgcolor=#dddddd><b>
+      Expiration Date</b></td>
+    <td bgcolor=#dddddd><b>
+      CVV</b></td>
     <td bgcolor=#dddddd><b>
       Delete</b></td></tr>
   " ; 
@@ -65,6 +97,7 @@ $vtsh = new VTSHelper();
 $results = $dbh->getAllCustomers();
 
 foreach ($results as $line) {
+  $id = $line['id'];
   $firstname = $vaeh->decrypt($line['firstname'], $encryptionKey);
   $lastname = $vaeh->decrypt($line['lastname'], $encryptionKey);
   $birthDate = $vtsh->detokenize($tokengroup, $line['birthDate'], 'datetemplate', $user, $passwd);
@@ -81,8 +114,9 @@ foreach ($results as $line) {
   if (isset($line['cvv']) && $line['cvv'] != 0)
     $cvv = $vtsh->detokenize($tokengroup, $line['cvv'], 'phonenumber', $user, $passwd);
 
-  print "<TR>
-  <TD>$firstname</td>
+  print "<tr>
+  <td class=\"idrow\">$id<div class=\"popup\"><img id=\"ID\" src=\"../img/$id.jpg\"></div></td>
+  <td>$firstname</td>
   <td>$lastname</td>
   <td>$birthDate</td>
   <td>$phoneNumber</td>
@@ -95,12 +129,13 @@ foreach ($results as $line) {
   <td>$cardnumber</td>
   <td>$expirationDate</td>
   <td>$cvv</td>
-  <td nowrap valign=middle><FONT SIZE=1>
+  <td nowrap valign=middle><font size=1>
   <a href=\"delete.php?id=$id&user=$user&passwd=$passwd\">Delete</a></td></tr>";
   }
 
 print "</table></div></div>";
 ?>
+</div>
 <footer>
    <a href=javascript:window.open('https://support.vormetric.com/login');>Support </a><span>|</span>
    <a href=javascript:window.open('http://www.vormetric.com')>About </a><span>|</span>

@@ -14,21 +14,27 @@
 <BODY  bgcolor="#FFFFFF">
 <header class="container-fluid">
   <div class="row">
-    <div class="col-xs-8"> <a href="#" class="site-logo"><img src="img/vormetric-logo.png"></a>
+    <div class="col-md-6"> <a href="#" class="site-logo"><img src="vormetric-logo.png"></a>
       <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
     </div>
-    <div class="col-xs-4">
-      <ul class="list-inline pull-right rightsideIcons">
-	<?php
-
-		$user = $_POST['user'];
-		$passwd = $_POST['passwd'];
-		if ($user == "") { $user = $_GET['user']; $passwd = $_GET['passwd']; }
-
-		print " Welcome, <strong>$user</strong>. <a href=\"index.html\">Logout</a> "; 
-	?>
-        </li>
+    <div class="col-md-2">
+      <ul class="nav nav-tabs">
+      	<li><h4 class="list-inline pull-right rightsideIcons"><a href="/demo.php">Vormetric Applicative Features</a></h4></li>
       </ul>
+    </div>
+    <div class="col-md-2"> 
+      <ul class="nav nav-tabs">
+      	<li><h4 class="list-inline pull-right rightsideIcons"><a href="/appli/databaseview.php">Application Integration</h4></li>
+      </ul>
+    </div>
+    <div class="col-md-2">
+    	<h4 class="list-inline pull-right rightsideIcons">
+	<?php
+		include 'config.php';
+
+		print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
+	?>
+		</h4>
     </div>
   </div>
 </header>
@@ -242,6 +248,7 @@ foreach ($results as $line) {
 
 print "</table></div></div>";
 ?>
+</body>
 <footer>
    <a href=javascript:window.open('https://support.vormetric.com/login');>Support </a><span>|</span>
    <a href=javascript:window.open('http://www.vormetric.com')>About </a><span>|</span>
@@ -250,4 +257,3 @@ print "</table></div></div>";
    Copyright &copy; 2016 Vormetric. Inc. All rights reserved.
 
 </footer>
-</body>

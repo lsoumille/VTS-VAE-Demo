@@ -6233,3 +6233,7 @@ header a.roundedBtns.backupButton:active {
 .panelBody .table_cover .checkboxdiv {
   margin: 5px 0;
 }
+
+.active {
+  background-color: red;
+}

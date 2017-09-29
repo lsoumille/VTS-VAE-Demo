@@ -131,8 +131,9 @@ $id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $
 
 
 //Saving the picture
-$target_file = "../img/".$id.basename($_FILES["picture"]["name"]);
-$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+$target_file = "../img/".$id;
+$imageFileType = pathinfo($_FILES["picture"]["name"],PATHINFO_EXTENSION);
+
 $uploadOk = 1;
 $check = getimagesize($_FILES["picture"]["tmp_name"]);
 if($check !== false) {
@@ -152,19 +153,19 @@ if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
 // if everything is ok, try to upload file
 } else {
-    if (move_uploaded_file($_FILES["picture"]["tmp_name"], $target_file)) {
+    if (move_uploaded_file($_FILES["picture"]["tmp_name"], "../img/".$id.'.jpg')) {
         echo "The file ". basename( $_FILES["picture"]["name"]). " has been uploaded.";
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
 }
 
-print "
+/*print "
   <BR><center><font size=5>
   <B>Customer Added.
   <BR><BR><BR><BR><BR><BR><BR>
-  <a href=\"/appli/index.php?user=$user&passwd=$passwd\">Home</a>
-  <meta http-equiv='refresh' content='1;url=/appli/index.php?user=$user&passwd=$passwd' />";
+  <a href=\"/appli/databaseview.php?user=$user&passwd=$passwd\">Home</a>
+  <meta http-equiv='refresh' content='1;url=/appli/databaseview.php?user=$user&passwd=$passwd' />";*/
 ?>
 </body>
 </html>

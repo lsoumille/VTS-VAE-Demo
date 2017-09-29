@@ -16,14 +16,19 @@ $encryptionKey = "vts-key-token";
 if(isset($_GET['id'])) {
 	$id = $_GET['id'];
 }
+
 $user = $_POST['user'];
 $passwd = $_POST['passwd'];
-if ($user == "") {
-	$user = $_GET['user'];
-	$passwd = $_GET['passwd'];
+if ($user != "") { 
+	file_put_contents(__DIR__.'credentials/login.txt', '');
+	file_put_contents(__DIR__.'credentials/login.txt', $user.'|'.$passwd);
+} else {
+	$loginFile = fopen(__DIR__. '/credentials/login.txt', 'r+');
+	$line = fgets($loginFile);
+	$credentials = explode("|", $line);
+	$user = $credentials[0];
+	$passwd = $credentials[1];
+	fclose($loginFile);
 }
 
-//DEBUG
-$user = "admin";
-$passwd = "Test123!";
 ?>
