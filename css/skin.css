@@ -294,9 +294,14 @@ float:left;
 
 }
 
+td {
+  max-width: 100;
+}
+
 table tr td{
 border-bottom:none !important;
-padding:7px;
+/*padding:7px;*/
+word-wrap:break-word;
 }
 
 table tr th{
@@ -655,7 +660,6 @@ outline:none
     margin: 0;
     overflow: auto;
     padding: 0;
-    position: absolute;
     right: 10px;
     top: 67px;
     width: auto;
@@ -787,4 +791,7 @@ ul#admin-box{padding:0px; padding-top:30px; background:#eee; padding-bottom:30px
     position: absolute;
  }
 
+ .margetop {
+  margin-top: 10px;
+ }
  

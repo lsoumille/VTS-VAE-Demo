@@ -58,3 +58,7 @@ body.login {
 .login .password-reset-link {
     text-align: center;
 }
+
+#app_container {
+    display: block;
+}

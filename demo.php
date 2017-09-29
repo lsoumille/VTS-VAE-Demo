@@ -13,7 +13,6 @@
 
 <BODY  bgcolor="#FFFFFF">
 <header class="container-fluid">
-  <div class="row">
     <div class="col-md-6"> <a href="#" class="site-logo"><img src="vormetric-logo.png"></a>
       <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
     </div>
@@ -36,9 +35,8 @@
 	?>
 		</h4>
     </div>
-  </div>
 </header>
-
+<div class="container-fluid">
 <?php
 
 include "utils/DBHelper.php";
@@ -204,8 +202,6 @@ Signature: <INPUT  NAME=\"sign\"  size=\"30\" maxlength=\"500\">
 </div>
 </table> ";
 print 	"
-	<div class=\"row\">
-	<div class=\"col-md-12\">
 	<table width=100% border=1>
 	<TR>
 	<TD bgcolor=#dddddd>ID#</TD>
@@ -246,8 +242,9 @@ foreach ($results as $line) {
 	<a href=\"delete.php?id=$id&user=$user&passwd=$passwd\">Delete</a></td></tr>";
 	}
 
-print "</table></div></div>";
+print "</table>";
 ?>
+</div>
 </body>
 <footer>
    <a href=javascript:window.open('https://support.vormetric.com/login');>Support </a><span>|</span>

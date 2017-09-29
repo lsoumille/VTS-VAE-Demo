@@ -20,7 +20,6 @@
 <body class="slideToLeft" style="left: 0px;">
 
 <header class="container-fluid">
-  <div class="row">
     <div class="col-md-6"> <a href="#" class="site-logo"><img src="../vormetric-logo.png"></a>
       <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
     </div>
@@ -42,10 +41,10 @@
     print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
   ?>
     </h4>
-    </div>
   </div>
 </header>
 <div class="container-fluid">
+    <button type="button" class="btn btn-primary center-block margetop">Add Customer</button>
 <?php
 include '../config.php';
 include '../utils/DBHelper.php';
@@ -53,7 +52,6 @@ include '../utils/VAEHelper.php';
 include '../utils/VTSHelper.php';
 
 print   "
-  <div class=\"row\">
   <div class=\"col-md-12\">
   <table width=100% border=1>
   <TR>
@@ -133,7 +131,7 @@ foreach ($results as $line) {
   <a href=\"delete.php?id=$id&user=$user&passwd=$passwd\">Delete</a></td></tr>";
   }
 
-print "</table></div></div>";
+print "</table></div>";
 ?>
 </div>
 <footer>
