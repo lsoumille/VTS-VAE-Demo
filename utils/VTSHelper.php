@@ -5,12 +5,14 @@ class VTSHelper {
 	const detokurl = "https://192.168.99.120/vts/rest/v2.0/detokenize";
 
 	public function tokenize($tokengroup, $data, $tokentemplate, $user, $password) {
+		if ($data === '')
+			return '';
+
 		//The JSON data.
 		$jsonData = array( 'tokengroup' => $tokengroup, 'data' => $data, 'tokentemplate' => $tokentemplate);
 
 		//Initiate cURL.
 		$tok = curl_init();
-
 		curl_setopt_array($tok, array(
    			CURLOPT_RETURNTRANSFER => 1,
     		CURLOPT_URL => self::tokurl,
@@ -39,12 +41,13 @@ class VTSHelper {
 	}
 
 	public function detokenize($tokengroup, $token, $tokentemplate, $user, $password) {
+		if ($token === '')
+			return '';
 		//The JSON data.
 		$jsonData = array( 'tokengroup' => $tokengroup, 'token' => $token, 'tokentemplate' => $tokentemplate);
 
 		//Initiate cURL.
 		$tok = curl_init();
-
 		curl_setopt_array($tok, array(
     		CURLOPT_RETURNTRANSFER => 1,
     		CURLOPT_URL => self::detokurl,

@@ -8,6 +8,9 @@ class VAEHelper {
 	const decrypturl = "http://localhost:4567/decrypt/";
 
 	public function encrypt($toencrypt, $key) {
+		if ($toencrypt === '')
+			return '';
+
 		//The POST data.
 		$postData = http_build_query(array( 'keyname' => $key, 'message' => $toencrypt));
 
@@ -35,6 +38,8 @@ class VAEHelper {
 	}
 
 	public function decrypt($todecrypt, $key) {
+		if ($todecrypt === '')
+			return '';
 		//The POST data.
 		$postData = http_build_query(array( 'keyname' => $key, 'message' => $todecrypt));
 
@@ -43,7 +48,7 @@ class VAEHelper {
 
 		curl_setopt_array($tok, array(
 		    CURLOPT_RETURNTRANSFER => 1,
-		    CURLOPT_URL => $decrypturl.$pinCode,
+		    CURLOPT_URL => (self::decrypturl).(self::pinCode),
 		    CURLOPT_POST => true,
 		    CURLOPT_POSTFIELDS => $postData
 		));

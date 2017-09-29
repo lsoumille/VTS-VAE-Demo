@@ -30,6 +30,19 @@ class DBHelper {
 		return $rows;
 	}
 
+	//Return all the tuples in an array
+	public function getAllCustomers() {
+		$connection = $this->createConnection();
+		$query = "SELECT * FROM customer order by id";
+		$array = $connection->query($query) or die ("Query failed. Result: $result");
+		$this->closeConnection($connection);
+		$rows = [];
+		while($row = mysqli_fetch_array($array)) {
+    		$rows[] = $row;
+		}
+		return $rows;
+	}
+
 	//Perform the query in param
 	//Be careful the query must be sanitized 
 	public function performQuery($connection, $query) {
@@ -62,6 +75,7 @@ class DBHelper {
 	public function addCustomer($tablename, $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv) {
 		$connection = $this->createConnection();
 		$query = "insert into ".$tablename." (firstname, lastname, birthDate, phoneNumber, nationality, ssn, address, city, postcode, country, cardNumber, expirationDate, cvv) values('$firstname', '$lastname', '$birthDate', '$phoneNumber', '$nationality', '$ssn', '$address', '$city', '$postcode', '$country', '$cardnumber', '$expirationdate', '$cvv')";
+		print $query.'\n';
 		$result = $this->performQuery($connection, $query);
 		$this->closeConnection($connection);
 		return $result;
