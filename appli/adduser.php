@@ -20,16 +20,27 @@
 <body class="slideToLeft" style="left: 0px;">
 
 <header class="container-fluid">
-  <div class="row">
-    <div class="col-xs-8"> <a href="#" class="site-logo"><img src="img/v-logo.jpg"></a>
+  <div class="col-md-6"> <a href="#" class="site-logo"><img src="../vormetric-logo.png"></a>
       <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
     </div>
-    <div class="col-xs-4">
-      <ul class="list-inline pull-right rightsideIcons">
-
-        </li>
+    <div class="col-md-2">
+      <ul class="nav nav-tabs">
+        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/demo.php">Vormetric Applicative Features</a></h4></li>
       </ul>
     </div>
+    <div class="col-md-2"> 
+      <ul class="nav nav-tabs">
+        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/appli/databaseview.php">Application Integration</h4></li>
+      </ul>
+    </div>
+    <div class="col-md-2">
+      <h4 class="list-inline pull-right rightsideIcons">
+  <?php
+    include '../config.php';
+
+    print "Welcome, $user. <a href=\"/index.html\">Logout</a>"; 
+  ?>
+    </h4>
   </div>
 </header>
 
@@ -83,11 +94,33 @@ if (isset($_POST['ssn'])) {
   $ssn = $_POST['ssn'];
 }
 
-print $ssn;
+$vtsh = new VTSHelper();
+$birthDate_tokenized = $vtsh->tokenize($tokengroup, $birthDate, 'datetemplate', $user, $passwd);
+if ($birthDate_tokenized == 'KO')
+  die("Tokenization Forbidden");
+$phonenumber_tokenized = $vtsh->tokenize($tokengroup, $phoneNumber, 'phonenumber', $user, $passwd);  
+print "phonenumber  : ".$phonenumber_tokenized;
 
-//Converting dates
-//$expiredate = $expireMonth.'/'.$expireYear;
-//First save the customer in clear
+$ssn_tokenized = $vtsh->tokenize($tokengroup, $ssn, 'ssn', $user,$passwd);
+print "SSN  : ".$ssn_tokenized;
+$postcode_tokenized = $vtsh->tokenize($tokengroup, $postcode, 'phonenumber', $user, $passwd);  
+
+print "Postcode : ".$postcode_tokenized;
+$cardnumber_tokenized = $vtsh->tokenize($tokengroup, $cardNumber, 'creditcard', $user, $passwd);  
+print "cardNumber : ".$cardnumber_tokenized;
+$expiredate_tokenized = $vtsh->tokenize($tokengroup, $expiredate, 'shortdate', $user, $passwd);  
+print "expiredate : ".$expiredate_tokenized;
+$cvv_tokenized = 0;
+if ($cvv !== 0) {
+  $cvv_tokenized = $vtsh->tokenize($tokengroup, $cvv, 'cvv', $user, $passwd);
+
+}
+print "cvv : ".$cvv_tokenized;
+//Save the encrypted data
+$id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birthDate_tokenized, $phonenumber_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $cardnumber_tokenized, $expiredate_tokenized, $cvv_tokenized);
+
+
+//Save the customer in clear
 $dbh = new DBHelper();
 $id = $dbh->addCustomer('customer_clear', $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardNumber, $expiredate, $cvv);
 print 'after first insert';
@@ -105,29 +138,6 @@ print "Address : ".$address_encrypted;
 $city_encrypted = $vaeh->encrypt($city, $encryptionKey);
 print "City : ".$city_encrypted;
 
-$vtsh = new VTSHelper();
-$birthDate_tokenized = $vtsh->tokenize('VTSDemoGroup', $birthDate, 'datetemplate', $user, $passwd);
-print "birthDate  : ".$birthDate_tokenized;
-$phonenumber_tokenized = $vtsh->tokenize('VTSDemoGroup', $phoneNumber, 'phonenumber', $user, $passwd);  
-print "phonenumber  : ".$phonenumber_tokenized;
-
-$ssn_tokenized = $vtsh->tokenize('VTSDemoGroup', $ssn, 'ssn', $user,$passwd);
-print "SSN  : ".$ssn_tokenized;
-$postcode_tokenized = $vtsh->tokenize('VTSDemoGroup', $postcode, 'phonenumber', $user, $passwd);  
-
-print "Postcode : ".$postcode_tokenized;
-$cardnumber_tokenized = $vtsh->tokenize('VTSDemoGroup', $cardNumber, 'creditcard', $user, $passwd);  
-print "cardNumber : ".$cardnumber_tokenized;
-$expiredate_tokenized = $vtsh->tokenize('VTSDemoGroup', $expiredate, 'shortdate', $user, $passwd);  
-print "expiredate : ".$expiredate_tokenized;
-$cvv_tokenized = 0;
-if ($cvv !== 0) {
-  $cvv_tokenized = $vtsh->tokenize('VTSDemoGroup', $cvv, 'phonenumber', $user, $passwd);
-
-}
-print "cvv : ".$cvv_tokenized;
-//Save the encrypted data
-$id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birthDate_tokenized, $phonenumber_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $cardnumber_tokenized, $expiredate_tokenized, $cvv_tokenized);
 
 
 //Saving the picture

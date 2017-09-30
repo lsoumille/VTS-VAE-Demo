@@ -38,7 +38,7 @@
   <?php
     include '../config.php';
 
-    print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
+    print "Welcome, $user. <a href=\"/index.html\">Logout</a>"; 
   ?>
     </h4>
   </div>
@@ -98,19 +98,19 @@ foreach ($results as $line) {
   $id = $line['id'];
   $firstname = $vaeh->decrypt($line['firstname'], $encryptionKey);
   $lastname = $vaeh->decrypt($line['lastname'], $encryptionKey);
-  $birthDate = $vtsh->detokenize($tokengroup, $line['birthDate'], 'datetemplate', $user, $passwd);
-  $phoneNumber = $vtsh->detokenize($tokengroup, $line['phoneNumber'], 'phonenumber', $user, $passwd);
+  $birthDate = (($res = $vtsh->detokenize($tokengroup, $line['birthDate'], 'datetemplate', $user, $passwd)) == 'KO' ? $line['birthDate'] : $res);
+  $phoneNumber = (($res = $vtsh->detokenize($tokengroup, $line['phoneNumber'], 'phonenumber', $user, $passwd)) == 'KO' ? $line['phoneNumber'] : $res);
   $nationality = $line['nationality'];
-  $ssn = $vtsh->detokenize($tokengroup, $line['ssn'], 'ssn', $user, $passwd);
+  $ssn = (($res = $vtsh->detokenize($tokengroup, $line['ssn'], 'ssn', $user, $passwd)) == 'KO' ? $line['ssn'] : $res);
   $address = $vaeh->decrypt($line['address'], $encryptionKey);
   $city = $vaeh->decrypt($line['city'], $encryptionKey);
-  $postcode = $vtsh->detokenize($tokengroup, $line['postcode'], 'phonenumber', $user, $passwd);
+  $postcode = (($res = $vtsh->detokenize($tokengroup, $line['postcode'], 'phonenumber', $user, $passwd)) == 'KO' ? $line['postcode'] : $res);
   $country = $line['country'];
-  $cardnumber = $vtsh->detokenize($tokengroup, $line['cardNumber'], 'creditcard', $user, $passwd);
-  $expirationDate = $vtsh->detokenize($tokengroup, $line['expirationDate'], 'shortdate', $user, $passwd);
-  $cvv = 0;
+  $cardnumber = (($res = $vtsh->detokenize($tokengroup, $line['cardNumber'], 'creditcard', $user, $passwd)) == 'KO' ? $line['cardNumber'] : $res);
+  $expirationDate = (($res = $vtsh->detokenize($tokengroup, $line['expirationDate'], 'shortdate', $user, $passwd)) == 'KO' ? $line['expirationDate'] : $res);
+  $cvv = '';
   if (isset($line['cvv']) && $line['cvv'] != 0)
-    $cvv = $vtsh->detokenize($tokengroup, $line['cvv'], 'phonenumber', $user, $passwd);
+    $cvv = (($res = $vtsh->detokenize($tokengroup, $line['cvv'], 'cvv', $user, $passwd)) == 'KO' ? $line['cvv'] : $res);
 
   print "<tr>
   <td class=\"idrow\">$id<div class=\"popup\"><img id=\"ID\" src=\"../img/$id.jpg\"></div></td>
@@ -128,7 +128,7 @@ foreach ($results as $line) {
   <td>$expirationDate</td>
   <td>$cvv</td>
   <td nowrap valign=middle><font size=1>
-  <a href=\"delete.php?id=$id&user=$user&passwd=$passwd\">Delete</a></td></tr>";
+  <a href=\"delete.php?id=$id&table=customer\">Delete</a></td></tr>";
   }
 
 print "</table></div>";

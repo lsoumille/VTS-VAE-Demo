@@ -65,9 +65,9 @@ class DBHelper {
 		return $result;
 	}
 
-	public function deleteById($id) {
+	public function deleteById($table, $id) {
 		$connection = $this->createConnection();
-		$query = "delete from transformation where id='$id'";
+		$query = "delete from $table where id='$id'";
 		$this->performQuery($connection, $query);
 		$this->closeConnection($connection);
 	}

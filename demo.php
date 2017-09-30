@@ -239,7 +239,7 @@ foreach ($results as $line) {
 	<td>$output</td>
 	<td>$comments</td>
 	<td nowrap valign=middle><FONT SIZE=1>
-	<a href=\"delete.php?id=$id&user=$user&passwd=$passwd\">Delete</a></td></tr>";
+	<a href=\"delete.php?id=$id&table=transformation\">Delete</a></td></tr>";
 	}
 
 print "</table>";

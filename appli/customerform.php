@@ -34,7 +34,7 @@
   <?php
     include '../config.php';
 
-    print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
+    print "Welcome, $user. <a href=\"/index.html\">Logout</a>"; 
   ?>
     </h4>
     </div>

@@ -34,7 +34,7 @@ class VTSHelper {
 		$obj = json_decode($tok_values);
 
 		if (strcmp($obj->status, "Succeed") !== 0)
-  			return $obj->reason;
+  			return 'KO';
 		else
   			return $obj->token;
 		
@@ -69,7 +69,7 @@ class VTSHelper {
 		$obj = json_decode($tok_values);
 
 		if (strcmp($obj->status, "Succeed") !== 0)
-  			return $obj->reason;
+  			return 'KO';
 		else 
   			return $obj->data;
 	}

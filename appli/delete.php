@@ -34,8 +34,8 @@
 
 <?php
 
-include "config.php";
-include "utils/DBHelper.php";
+include "../config.php";
+include "../utils/DBHelper.php";
 
 $dbh = new DBHelper();
 $dbh->deleteById($table, $id);
@@ -43,8 +43,8 @@ $dbh->deleteById($table, $id);
 print "	<BR><center><font size=5>
 	<B>Deleted.
 	<BR><BR><BR><BR><BR><BR><BR>
-	<a href=\"/demo.php\">Home</a>
-	<meta http-equiv='refresh' content='1;url=/demo.php'/>";
+	<a href=\"/appli/databaseview.php?\">Home</a>
+	<meta http-equiv='refresh' content='1;url=/appli/databaseview.php'/>";
 
 ?>
 </body>
