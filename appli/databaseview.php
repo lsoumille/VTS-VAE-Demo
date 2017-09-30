@@ -44,7 +44,7 @@
   </div>
 </header>
 <div class="container-fluid">
-    <button type="button" class="btn btn-primary center-block margetop">Add Customer</button>
+    <a href="/appli/customerform.php"><button type="button" class="btn btn-primary center-block margetop">Add Customer</button></a>
 <?php
 include '../config.php';
 include '../utils/DBHelper.php';
