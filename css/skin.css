@@ -794,4 +794,9 @@ ul#admin-box{padding:0px; padding-top:30px; background:#eee; padding-bottom:30px
  .margetop {
   margin-top: 10px;
  }
+
+ .form-horizontal .form-group {
+  margin-left: 0;
+  margin-right: 0;
+ }
  
