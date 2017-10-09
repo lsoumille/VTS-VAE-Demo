@@ -9,11 +9,12 @@
 <link rel="stylesheet" type="text/css" href="/css/base.css" />
 <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
 <link href="/css/skin.css" rel="stylesheet">
+<link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
 
 <BODY  bgcolor="#FFFFFF">
 <header class="container-fluid">
     <div class="col-md-6"> <a href="#" class="site-logo"><img src="vormetric-logo.png"></a>
-      <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Toolbox</h3>
+      <h3><span class="verticalPipe"></span></i>Vormetric Toolbox</h3>
     </div>
     <div class="col-md-2">
       <ul class="nav nav-tabs">
@@ -35,63 +36,70 @@
 		</h4>
     </div>
 </header>
-<div class="container-fluid">
-
+<div id="app_container" class="container-fluid">
+	<div class="col-md-1 left-navigation">
+      <ul class="list-unstyled">
+        <li class="active"> <a href="https://192.168.99.120/admin/"><i class="fa fa-wrench fa-1x" aria-hidden="true"></i> <span>Toolbox</span></a> </li>
+		<li> <a href="https://192.168.99.120/admin/tokenization/tenant/" class=""><i class="fa fa-user-circle-o fa-1x" aria-hidden="true""></i> <span>Customer Database</span> </a>
+			<ul id="subMenu">
+                 <li><a href="https://192.168.99.120/admin/auth/group/">View Database</a></li>
+                 <li><a href="https://192.168.99.120/admin/tokenization/groupprofile/">Add Customer</a></li>
+             </ul>
+		</li>
+      </ul>
+    </div>
+    
+    		<div class="col-md-offset-1 col-md-11 perfectWidth">
 <?php
 
 include "utils/DBHelper.php";
 print "
 </table>
 <HR>
-<table width=100% border=1>
-<div class=\"row\">
-<TR><td bgcolor=#dddddd><b>Tokenization :</b></td><TR>
+<table width=100%>
+<tr><td bgcolor=#dddddd colspan=\"2\"><b>Tokenization :</b></td></tr>
+<tr>
+	<td>
+	<FORM ACTION=\"vts/tokenize.php\" METHOD=\"POST\" id=\"formTok\">
 
-<TD>
-<div class=\"col-md-6\">
-<FORM ACTION=\"vts/tokenize.php\" METHOD=\"POST\" id=\"formTok\">
-
-<BR>Input to tokenize:  <INPUT  id=\"tokInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
-<BR>
+	<BR>Input to tokenize:  <INPUT  id=\"tokInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
+	<BR>
      Format:  
 	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> FPE Template
 	<input type=\"radio\" name=\"template\" value=\"Numbers-Group_Key1\"> Numbers 
 	<input type=\"radio\" name=\"template\" value=\"Alpha-Group_Key1\"> Alpha
 	<input type=\"radio\" name=\"template\" value=\"ASCII-Group_Key1\"> ASCII
-<BR><BR>
-<input type=\"hidden\" name=\"user\" value=\"$user\">
-<input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
-<input type=\"hidden\" name=\"action\" value=\"tokenize\">
+	<BR><BR>
+	<input type=\"hidden\" name=\"user\" value=\"$user\">
+	<input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
+	<input type=\"hidden\" name=\"action\" value=\"tokenize\">
 
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
+	<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
-</FORM>
-</div>
-<div class=\"col-md-6\">
-<FORM ACTION=\"vts/detokenize.php\" METHOD=\"POST\" id=\"formDetok\">
+	</FORM>
+	</td>
+	<td>
+	<FORM ACTION=\"vts/detokenize.php\" METHOD=\"POST\" id=\"formDetok\">
 
-<BR>Input to detokenize:  <INPUT  id=\"detokInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
-<BR>
+	<BR>Input to detokenize:  <INPUT  id=\"detokInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
+	<BR>
      Format:  
 	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> FPE Template
 	<input type=\"radio\" name=\"template\" value=\"Numbers-Group_Key1\"> Numbers 
 	<input type=\"radio\" name=\"template\" value=\"Alpha-Group_Key1\"> Alpha
 	<input type=\"radio\" name=\"template\" value=\"ASCII-Group_Key1\"> ASCII
-<BR><BR>
-<input type=\"hidden\" name=\"user\" value=\"$user\">
-<input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
-<input type=\"hidden\" name=\"action\" value=\"tokenize\">
+	<BR><BR>
+	<input type=\"hidden\" name=\"user\" value=\"$user\">
+	<input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
+	<input type=\"hidden\" name=\"action\" value=\"tokenize\">
 
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
+	<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
-</FORM>
-</div>
-</td> 
-</div>
-<div class=\"row\">
-<TR><td bgcolor=#dddddd><b>Encryption (AES 256):</b></td><TR>
+	</FORM>
+	</td> 
+	</tr>
+<TR><td bgcolor=#dddddd colspan=\"2\"><b>Encryption (AES 256):</b></td><TR>
 <TD>
-<div class=\"col-md-6\">
 <FORM ACTION=\"vae/encrypt.php\" METHOD=\"POST\" id=\"formEncrypt\">
 
 <BR>Input to Encrypt:  <INPUT id=\"encryptInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
@@ -104,8 +112,8 @@ print "
 <INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
-</div>
-<div class=\"col-md-6\">
+</td>
+<td>
 <FORM ACTION=\"vae/decrypt.php\" METHOD=\"POST\" id=\"formDecrypt\">
 
 <BR>Input to decrypt:  <INPUT  id=\"decryptInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
@@ -118,13 +126,9 @@ print "
 <INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
-</div>
 </td> 
-</div>
-<div class=\"row\">
-<TR><td bgcolor=#dddddd><b>Signing (RSA 2048):</b></td><TR>
+<TR><td bgcolor=#dddddd colspan=\"2\"><b>Signing (RSA 2048):</b></td><TR>
 <TD>
-<div class=\"col-md-6\">
 <FORM ACTION=\"vae/signing.php\" METHOD=\"POST\" id=\"formSign\">
 
 <BR>Input to Sign:  <INPUT  id=\"signInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
@@ -136,8 +140,8 @@ print "
 <INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
-</div>
-<div class=\"col-md-6\">
+</td>
+<td>
 <FORM ACTION=\"vae/verify.php\" METHOD=\"POST\" id=\"formVerify\">
 
 <BR>Input to Verify:  <INPUT  id=\"signToVerifyInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
@@ -152,13 +156,9 @@ Signature: <INPUT  id=\"verifyInput\" NAME=\"sign\"  size=\"30\" maxlength=\"500
 <INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
-</div>
 </td> 
-</div>
-<div class=\"row\">
-<TR><td bgcolor=#dddddd><b>Digest (SHA 256):</b></td><TR>
+<TR><td bgcolor=#dddddd colspan=\"2\"><b>Digest (SHA 256):</b></td><TR>
 <TD>
-<div class=\"col-md-6\">
 <FORM ACTION=\"vae/digest.php\" METHOD=\"POST\" id=\"formDigest\">
 
 <BR>Input to Digest:  <INPUT id=\"digestInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
@@ -169,9 +169,7 @@ Signature: <INPUT  id=\"verifyInput\" NAME=\"sign\"  size=\"30\" maxlength=\"500
 <input type=\"hidden\" name=\"algo\" value=\"SHA256\">
 <INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 </FORM>
-</div>
 </td> 
-</div>
 </table>
 <script src=\"js/asynchronousCalls.js\"></script> 
 ";
@@ -218,6 +216,7 @@ foreach ($results as $line) {
 
 print "</table>";
 ?>
+</div></div>
 </div>
 </body>
 <footer>

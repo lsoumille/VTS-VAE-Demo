@@ -799,4 +799,25 @@ ul#admin-box{padding:0px; padding-top:30px; background:#eee; padding-bottom:30px
   margin-left: 0;
   margin-right: 0;
  }
+
+ .col-md-offset-1 {
+  margin-left:65px;
+ }
+
+
+ .grey {
+  background-color: #dddddd;
+ }
+
+ .perfectWidth {
+  width: calc(100% - 65px);
+  padding-left: 0;
+  padding-right:0;
+ }
  
+footer {
+    position: absolute;
+    bottom: 0px;
+    left: calc(calc(100% - 65px) * 0.25);
+    right: 25%;
+}
