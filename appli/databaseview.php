@@ -6,6 +6,7 @@
 <link href="/css/vormetric.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/css/base.css" />
 <link rel="stylesheet" type="text/css" href="/css/login.css" />
+<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
 
 
 <!--[if lt IE 9]>
@@ -21,30 +22,35 @@
 
 <header class="container-fluid">
     <div class="col-md-6"> <a href="#" class="site-logo"><img src="../vormetric-logo.png"></a>
-      <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
+      <h3><span class="verticalPipe"></span></i>Customer Database</h3>
     </div>
-    <div class="col-md-2">
-      <ul class="nav nav-tabs">
-        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/demo.php">Vormetric Applicative Features</a></h4></li>
-      </ul>
-    </div>
-    <div class="col-md-2"> 
-      <ul class="nav nav-tabs">
-        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/appli/databaseview.php">Application Integration</h4></li>
-      </ul>
-    </div>
-    <div class="col-md-2">
+    <div class="col-md-offset-4 col-md-2">
       <h4 class="list-inline pull-right rightsideIcons">
   <?php
     include '../config.php';
 
-    print "Welcome, $user. <a href=\"/index.html\">Logout</a>"; 
+    print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
   ?>
     </h4>
-  </div>
+    </div>
 </header>
-<div class="container-fluid">
-    <a href="/appli/customerform.php"><button type="button" class="btn btn-primary center-block margetop">Add Customer</button></a>
+
+<div id="app_container" class="container-fluid">
+  <div class="col-md-1 left-navigation">
+      <ul class="list-unstyled">
+        <li> <a href="/demo.php"><i class="fa fa-wrench fa-1x" aria-hidden="true"></i> <span>Toolbox</span></a> </li>
+        <li class="active"> <a href="/appli/databaseview.php" class=""><i class="fa fa-user-circle-o fa-1x" aria-hidden="true""></i> <span>Customer Database</span> </a>
+              <ul id="subMenu">
+                 <li class="active"><a href="/appli/databaseview.php">View Database</a></li>
+                 <li><a href="/appli/customerform.php">Add Customer</a></li>
+             </ul>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="col-md-offset-1 col-md-11 perfectWidth">
+      <a href="/appli/customerform.php"><button type="button" class="btn btn-primary center-block margetop">Add Customer</button></a>
+
 <?php
 include '../config.php';
 include '../utils/DBHelper.php';
@@ -55,7 +61,7 @@ print   "
   <div class=\"col-md-12\">
   <table width=100% border=1>
   <TR>
-  <TD bgcolor=#dddddd>ID#</TD>
+  <TD bgcolor=#dddddd>CustomerID</TD>
   <td bgcolor=#dddddd>
     <b>Firstname</b>
     </td>
@@ -133,6 +139,10 @@ foreach ($results as $line) {
 
 print "</table></div>";
 ?>
+    </div>
+
+<div class="container-fluid">
+    
 </div>
 <footer>
    <a href=javascript:window.open('https://support.vormetric.com/login');>Support </a><span>|</span>
@@ -142,6 +152,5 @@ print "</table></div>";
    Copyright &copy; 2016 Vormetric. Inc. All rights reserved.
 
 </footer>
-</body>
 </body>
 </html>

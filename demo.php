@@ -9,24 +9,14 @@
 <link rel="stylesheet" type="text/css" href="/css/base.css" />
 <link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
 <link href="/css/skin.css" rel="stylesheet">
-<link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
 
 <BODY  bgcolor="#FFFFFF">
 <header class="container-fluid">
     <div class="col-md-6"> <a href="#" class="site-logo"><img src="vormetric-logo.png"></a>
       <h3><span class="verticalPipe"></span></i>Vormetric Toolbox</h3>
     </div>
-    <div class="col-md-2">
-      <ul class="nav nav-tabs">
-      	<li><h4 class="list-inline pull-right rightsideIcons"><a href="/demo.php">Vormetric Applicative Features</a></h4></li>
-      </ul>
-    </div>
-    <div class="col-md-2"> 
-      <ul class="nav nav-tabs">
-      	<li><h4 class="list-inline pull-right rightsideIcons"><a href="/appli/databaseview.php">Application Integration</h4></li>
-      </ul>
-    </div>
-    <div class="col-md-2">
+    <div class="col-md-offset-4 col-md-2">
     	<h4 class="list-inline pull-right rightsideIcons">
 	<?php
 		include 'config.php';
@@ -39,17 +29,17 @@
 <div id="app_container" class="container-fluid">
 	<div class="col-md-1 left-navigation">
       <ul class="list-unstyled">
-        <li class="active"> <a href="https://192.168.99.120/admin/"><i class="fa fa-wrench fa-1x" aria-hidden="true"></i> <span>Toolbox</span></a> </li>
-		<li> <a href="https://192.168.99.120/admin/tokenization/tenant/" class=""><i class="fa fa-user-circle-o fa-1x" aria-hidden="true""></i> <span>Customer Database</span> </a>
+        <li class="active"> <a href="/demo.php"><i class="fa fa-wrench fa-1x" aria-hidden="true"></i> <span>Toolbox</span></a> </li>
+		<li> <a href="/appli/databaseview.php" class=""><i class="fa fa-user-circle-o fa-1x" aria-hidden="true""></i> <span>Customer Database</span> </a>
 			<ul id="subMenu">
-                 <li><a href="https://192.168.99.120/admin/auth/group/">View Database</a></li>
-                 <li><a href="https://192.168.99.120/admin/tokenization/groupprofile/">Add Customer</a></li>
+                 <li><a href="/appli/databaseview.php">View Database</a></li>
+                 <li><a href="/appli/customerform.php">Add Customer</a></li>
              </ul>
 		</li>
       </ul>
     </div>
     
-    		<div class="col-md-offset-1 col-md-11 perfectWidth">
+    <div class="col-md-offset-1 col-md-11 perfectWidth">
 <?php
 
 include "utils/DBHelper.php";
@@ -171,54 +161,12 @@ Signature: <INPUT  id=\"verifyInput\" NAME=\"sign\"  size=\"30\" maxlength=\"500
 </FORM>
 </td> 
 </table>
-<script src=\"js/asynchronousCalls.js\"></script> 
+<script src=\"js/asynchronousCalls.js\"></script>
+<iframe id=\"transfoDB\" src=\"/transformationDB.php\" width=\"100%\" height=\"25%\" frameborder=\"0\" scrolling=\"no\"></iframe> 
 ";
-print 	"
-	<table width=100% border=1>
-	<TR>
-	<TD bgcolor=#dddddd>ID#</TD>
-	<td bgcolor=#dddddd>
-		<b>Action</b>
-		</td>
-		<td bgcolor=#dddddd><b>
-			Input Data</b></td>
-		<td bgcolor=#dddddd><b>
-			Output Data</b></td>
-		<td bgcolor=#dddddd><b>
-			Comments</b></td>
-		<td bgcolor=#dddddd><b>
-			Delete</b></td></tr>
-	" ;
-//$id = $_GET['id'];
-$user = $_POST['user'];
-$passwd = $_POST['passwd'];
-if ($user == "") { $user = $_GET['user']; $passwd = $_GET['passwd']; } 
-
-$dbh = new DBHelper();
-//Get only last 5 results
-$results = array_slice($dbh->getAllDatabase(), -5);
-foreach ($results as $line) {
-	$action = $line["action"];
-	$id = $line["id"];
-	$input = htmlspecialchars($line["input"]);
-	$output = htmlspecialchars($line["output"]);
-	$comments = $line["comments"];
-
-	print "<TR>
-	<TD>$id</td>
-	<td>$action</td>
-	<td>$input</td>
-	<td>$output</td>
-	<td>$comments</td>
-	<td nowrap valign=middle><FONT SIZE=1>
-	<a href=\"delete.php?id=$id&table=transformation\">Delete</a></td></tr>";
-	}
-
-print "</table>";
 ?>
-</div></div>
 </div>
-</body>
+</div>
 <footer>
    <a href=javascript:window.open('https://support.vormetric.com/login');>Support </a><span>|</span>
    <a href=javascript:window.open('http://www.vormetric.com')>About </a><span>|</span>
@@ -227,3 +175,6 @@ print "</table>";
    Copyright &copy; 2016 Vormetric. Inc. All rights reserved.
 
 </footer>
+</body>
+</html>
+

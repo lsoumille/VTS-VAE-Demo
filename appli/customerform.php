@@ -8,52 +8,56 @@
 </HEAD>
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
 <link href="/css/bootstrap.min.css" rel="stylesheet">
-<!--<link href="/css/vormetric.min.css" rel="stylesheet">-->
+<link href="/css/vormetric.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/css/dashboard.css" />
+<link rel="stylesheet" type="text/css" href="/css/login.css" />
+<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
+
+
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 <link href="/css/skin.css" rel="stylesheet">
 <link href="/js/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet">
 
 <header>
   <div>
     <div class="col-md-6"> <a href="#" class="site-logo"><img src="../vormetric-logo.png"></a>
-      <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
+      <h3><span class="verticalPipe"></span>Add new customer</h3>
     </div>
-    <div class="col-md-2">
-      <ul class="nav nav-tabs">
-        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/demo.php">Vormetric Applicative Features</a></h4></li>
-      </ul>
-    </div>
-    <div class="col-md-2"> 
-      <ul class="nav nav-tabs">
-        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/appli/databaseview.php">Application Integration</h4></li>
-      </ul>
-    </div>
-    <div class="col-md-2">
+    <div class="col-md-offset-4 col-md-2">
       <h4 class="list-inline pull-right rightsideIcons">
-  <?php
-    include '../config.php';
+      <?php
+        include '../config.php';
 
-    print "Welcome, $user. <a href=\"/index.html\">Logout</a>"; 
-  ?>
+        print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
+      ?>
     </h4>
     </div>
   </div>
 </header>
-<div class="container-fluid">
-<form class="form-horizontal" enctype="multipart/form-data" action="adduser.php" method="post">
-<fieldset>
 
-<!-- Form Name -->
-<legend>Add new customer</legend>
-
-
-
+<div id="app_container" class="container-fluid">
+  <div class="col-md-1 left-navigation">
+      <ul class="list-unstyled">
+        <li> <a href="/demo.php"><i class="fa fa-wrench fa-1x" aria-hidden="true"></i> <span>Toolbox</span></a> </li>
+    <li class="active"> <a href="/appli/databaseview.php" class=""><i class="fa fa-user-circle-o fa-1x" aria-hidden="true""></i> <span>Customer Database</span> </a>
+      <ul id="subMenu">
+                 <li><a href="/appli/databaseview.php">View Database</a></li>
+                 <li><a href="/appli/customerform.php">Add Customer</a></li>
+             </ul>
+    </li>
+      </ul>
+    </div>
+    
+    <div class="col-md-offset-1 col-md-11 perfectWidth">
+      <form id="userForm" class="form-horizontal" enctype="multipart/form-data" action="adduser.php" method="post">
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="name">First Name</label>  
   <div class="col-md-5">
-  <input id="name" name="name" placeholder="" class="form-control input-md" required="" type="text">
+  <input id="name" name="name" placeholder="First Name" class="form-control input-md" required="" type="text">
     
   </div>
 </div>
@@ -62,7 +66,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="surname">Last Name</label>  
   <div class="col-md-5">
-  <input id="surname" name="surname" placeholder="" class="form-control input-md" required="" type="text">
+  <input id="surname" name="surname" placeholder="Last Name" class="form-control input-md" required="" type="text">
     
   </div>
 </div>
@@ -70,60 +74,60 @@
 <div class="form-group">
     <label class="col-md-4 control-label" for="birthdate">Date Of Birth</label>
     <div class="col-md-5">
-    	<input type="text" id="datepicker" name="datepicker" class="form-control" placeholder="Choose">
+      <input type="text" id="datepicker" name="datepicker" class="form-control" placeholder="Choose">
     </div>
 </div>
 
 <div class="form-group">
-	<label class="col-md-4 control-label" for="phonenumber">Phone number</label>
+  <label class="col-md-4 control-label" for="phonenumber">Phone number</label>
     <div class="col-md-5">
-    	<input id="phonenumber" name="phonenumber" placeholder="" class="form-control input-md" type="text">
+      <input id="phonenumber" name="phonenumber" placeholder="Phone Number" class="form-control input-md" type="text">
     </div>
 </div>
 
 <div class="form-group">
-	<label class="col-md-4 control-label" for="phonenumber">Nationality</label>
+  <label class="col-md-4 control-label" for="phonenumber">Nationality</label>
     <div class="col-md-5">
-    	<input id="nationality" name="nationality" placeholder="" class="form-control input-md" type="text">
+      <input id="nationality" name="nationality" placeholder="Nationality" class="form-control input-md" type="text">
     </div>
 </div>
 
 <div class="form-group">
-	<label class="col-md-4 control-label" for="phonenumber">Social Security Number</label>
+  <label class="col-md-4 control-label" for="phonenumber">Social Security Number</label>
     <div class="col-md-5">
-    	<input id="ssn" name="ssn" placeholder="" class="form-control input-md" type="text">
+      <input id="ssn" name="ssn" placeholder="SSN" class="form-control input-md" type="text">
     </div>
 </div>
 
 <div class="form-group">
-	<label class="col-md-4 control-label" for="textinput">Address</label>
-		<div class="col-md-5">
-	  		<input id="address" name="address" type="text" placeholder="Address" class="form-control">
-		</div>
-	</div>
+  <label class="col-md-4 control-label" for="textinput">Address</label>
+    <div class="col-md-5">
+        <input id="address" name="address" type="text" placeholder="Address" class="form-control">
+    </div>
+  </div>
 
-	<!-- Text input-->
-	<div class="form-group">
-		<label class="col-md-4 control-label" for="textinput">Postcode</label>
-		<div class="col-md-5">
-	  		<input id="postcode" name="postcode" type="text" placeholder="Post Code" class="form-control">
-		</div>
-	</div>
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="textinput">Postcode</label>
+    <div class="col-md-5">
+        <input id="postcode" name="postcode" type="text" placeholder="Post Code" class="form-control">
+    </div>
+  </div>
 
-	<!-- Text input-->
-	<div class="form-group">
-		<label class="col-md-4 control-label" for="textinput">City</label>
-		<div class="col-md-5">
-	  		<input id="city" name="city" type="text" placeholder="City" class="form-control">
-		</div>
-	</div>
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="textinput">City</label>
+    <div class="col-md-5">
+        <input id="city" name="city" type="text" placeholder="City" class="form-control">
+    </div>
+  </div>
 
-	<!-- Text input-->
-	<div class="form-group">
-	<label class="col-md-4 control-label" for="textinput">Country</label>
-	<div class="col-md-5">
-	  <input id="country" name="country" type="text" placeholder="Country" class="form-control">
-	</div>
+  <!-- Text input-->
+  <div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Country</label>
+  <div class="col-md-5">
+    <input id="country" name="country" type="text" placeholder="Country" class="form-control">
+  </div>
 </div>
 
 <!-- File Button --> 
@@ -163,7 +167,7 @@
             </div>
             <div class="col-md-6">
               <select class="form-control" name="expiry-year">
-              	<option>Year</option>
+                <option>Year</option>
                 <option value="17">2017</option>
                 <option value="18">2018</option>
                 <option value="19">2019</option>
@@ -189,16 +193,15 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="validation"></label>
   <div class="col-md-8">
-    <button id="validation" name="validation" class="btn btn-success" type="submit">Save</button>
-    <button id="cancel" name="cancel" class="btn btn-danger">Cancel</button>
+    <input id="validation" name="validation" value="Save" class="btn btn-success" type="submit"></input>
   </div>
 </div>
 
 </fieldset>
 </form>
 <script type="text/javascript">
-	//DATE PICKER
-	$(function() {
+  //DATE PICKER
+  $(function() {
         $( "#datepicker" ).datepicker({
             dateFormat : 'mm/dd/yy',
             changeMonth : true,
@@ -208,7 +211,9 @@
         });
     });
 </script>
-</div>
+<script src="/js/asynchronousCalls.js"></script>
+    </div>
+  </div>
 <footer>
    <a href=javascript:window.open('https://support.vormetric.com/login');>Support </a><span>|</span>
    <a href=javascript:window.open('http://www.vormetric.com')>About </a><span>|</span>

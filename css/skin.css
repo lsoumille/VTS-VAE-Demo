@@ -180,9 +180,9 @@ body{
 .colMS{
 margin-right: 15px !important;
 }
-#content{
+/*#content{
  margin:0px;
-}
+}*/
 
 .module{
 padding-top:0px;
@@ -793,6 +793,7 @@ ul#admin-box{padding:0px; padding-top:30px; background:#eee; padding-bottom:30px
 
  .margetop {
   margin-top: 10px;
+  margin-bottom: 10px;
  }
 
  .form-horizontal .form-group {
@@ -814,10 +815,27 @@ ul#admin-box{padding:0px; padding-top:30px; background:#eee; padding-bottom:30px
   padding-left: 0;
   padding-right:0;
  }
+
+ #admin-box {
+    background-color: #dddddd;
+ }
  
 footer {
-    position: absolute;
+    padding-top: 20px;
     bottom: 0px;
     left: calc(calc(100% - 65px) * 0.25);
     right: 25%;
+}
+
+li ul {
+  list-style-type: none;
+}
+
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+#userForm {
+  padding-top: 20px;
 }

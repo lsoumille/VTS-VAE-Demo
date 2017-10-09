@@ -8,6 +8,30 @@ $(document).ready(Onready);
 		$('#formSign').submit(OnsubmitSign);
 		$('#formVerify').submit(OnsubmitVerify);
 		$('#formDigest').submit(OnsubmitDigest);
+		$('#userForm').submit(OnsubmitUser);
+		$('#tokInput').val("");
+		$('#detokInput').val("");
+		$('#decryptInput').val("");
+		$('#encryptInput').val("");
+		$('#signToVerifyInput').val("");
+		$('#signInput').val("");
+		$('#verifyInput').val("");
+		$('#digestInput').val("");
+	};
+
+	function OnsubmitUser(data){
+		$.ajax({
+			type: $(this).attr("method"),
+			url: $(this).attr("action"),
+			data: $(this).serialize(),
+		})
+		.done(function(result){
+			window.location.replace("http://localhost:8081/appli/databaseview.php");	
+		})
+		.error(function(){
+			alert("Error, User was not created");
+		});
+		return false;
 	};
 
 	function OnsubmitTok(data){
@@ -18,7 +42,8 @@ $(document).ready(Onready);
 		})
 		.done(function(result){
 			$('#detokInput').val(result);
-			$('#tokInput').val("");	
+			$('#tokInput').val("");
+			reloadTransfoDB();
 		})
 		.error(function(){
 			alert("Error, Token was not generated");
@@ -34,7 +59,8 @@ $(document).ready(Onready);
 		})
 		.done(function(result){
 			$('#tokInput').val(result);
-			$('#detokInput').val("");	
+			$('#detokInput').val("");
+			reloadTransfoDB();	
 		})
 		.error(function(){
 			alert("Error, Data was not generated");
@@ -50,7 +76,8 @@ $(document).ready(Onready);
 		})
 		.done(function(result){
 			$('#decryptInput').val(result);
-			$('#encryptInput').val("");	
+			$('#encryptInput').val("");
+			reloadTransfoDB();	
 		})
 		.error(function(){
 			alert("Error, Encrypted text was not generated");
@@ -66,7 +93,8 @@ $(document).ready(Onready);
 		})
 		.done(function(result){
 			$('#encryptInput').val(result);
-			$('#decryptInput').val("");	
+			$('#decryptInput').val("");
+			reloadTransfoDB();
 		})
 		.error(function(){
 			alert("Error, Decrypted text was not generated");
@@ -83,6 +111,7 @@ $(document).ready(Onready);
 		.done(function(result){
 			$('#signToVerifyInput').val($('#signInput').val())
 			$('#verifyInput').val(result);
+			reloadTransfoDB();
 		})
 		.error(function(){
 			alert("Error, Signature was not generated");
@@ -101,6 +130,7 @@ $(document).ready(Onready);
 			$('#signToVerifyInput').val("");
 			$('#verifyInput').val("");
 			$('#resultSig').text("Result : " + result);
+			reloadTransfoDB();
 		})
 		.error(function(){
 			alert("Error, Verifying process is down");
@@ -116,10 +146,15 @@ $(document).ready(Onready);
 		})
 		.done(function(result){
 			$('#digestInput').val("");
-			$('#resultDigest').text(result);	
+			$('#resultDigest').text(result);
+			reloadTransfoDB();	
 		})
 		.error(function(){
 			alert("Error, Decrypted text was not generated");
 		});
 		return false;
 	};
+
+	function reloadTransfoDB() {
+		document.getElementById('transfoDB').contentWindow.location.reload();
+	}

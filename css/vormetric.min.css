@@ -274,7 +274,7 @@ button.ui-button::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
-.ui-datepicker {
+/*.ui-datepicker {
   width: 17em;
   padding: .2em .2em 0;
   display: none;
@@ -370,7 +370,7 @@ button.ui-button::-moz-focus-inner {
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
   float: left;
 }
-/* with multiple calendars */
+
 .ui-datepicker.ui-datepicker-multi {
   width: auto;
 }
@@ -402,7 +402,7 @@ button.ui-button::-moz-focus-inner {
   width: 100%;
   font-size: 0;
 }
-/* RTL support */
+
 .ui-datepicker-rtl {
   direction: rtl;
 }
@@ -436,7 +436,7 @@ button.ui-button::-moz-focus-inner {
 .ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {
   border-right-width: 0;
   border-left-width: 1px;
-}
+}*/
 .ui-spinner {
   position: relative;
   display: inline-block;
@@ -3778,11 +3778,11 @@ header a.roundedBtns .badge {
 .panels-container .tab-panel .panel-content .controlGrp .list-inline {
   margin-bottom: -12px;
 }
-.panels-container .tab-panel .panel-content .controlGrp .datepicker {
+/*.panels-container .tab-panel .panel-content .controlGrp .datepicker {
   background: #ffffff url("../images/calender.png") no-repeat;
   background-position: 98% 6px;
   padding-right: 25px;
-}
+}*/
 .panels-container .tab-panel .panel-content .controlGrp .dropdown ul {
   margin: 0;
   padding: 0;
@@ -5428,7 +5428,7 @@ a:active .notificationWrap .alertList li .statusIcon.close.medium,
 	display:none;
 }*/
 /*override detepicker*/
-.ui-datepicker {
+/*.ui-datepicker {
   font-family: "OpenSansRegular";
   padding: 0;
   overflow: hidden;
@@ -5528,7 +5528,7 @@ a:active .notificationWrap .alertList li .statusIcon.close.medium,
   background: #ffffff url("../images/calender.png") no-repeat;
   background-position: 98% 6px;
   padding-right: 25px;
-}
+}*/
 .helpOverlay {
   position: absolute;
   background: #ffffff;
