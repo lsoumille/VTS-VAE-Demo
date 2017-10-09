@@ -1,8 +1,7 @@
 <HTML>
 <HEAD>
-  <TITLE>Vormetric Tokenization Demo</TITLE>
+  <TITLE>Vormetric Toolbox</TITLE>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-
 </HEAD>
 <link rel="icon" href="favicon.ico" type="image/x-icon" />
 <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -14,7 +13,7 @@
 <BODY  bgcolor="#FFFFFF">
 <header class="container-fluid">
     <div class="col-md-6"> <a href="#" class="site-logo"><img src="vormetric-logo.png"></a>
-      <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
+      <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Toolbox</h3>
     </div>
     <div class="col-md-2">
       <ul class="nav nav-tabs">
@@ -37,6 +36,7 @@
     </div>
 </header>
 <div class="container-fluid">
+
 <?php
 
 include "utils/DBHelper.php";
@@ -49,9 +49,9 @@ print "
 
 <TD>
 <div class=\"col-md-6\">
-<FORM ACTION=\"vts/tokenize.php\" METHOD=\"POST\">
+<FORM ACTION=\"vts/tokenize.php\" METHOD=\"POST\" id=\"formTok\">
 
-<BR>Input to tokenize:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
+<BR>Input to tokenize:  <INPUT  id=\"tokInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
 <BR>
      Format:  
 	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> FPE Template
@@ -63,17 +63,17 @@ print "
 <input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
 <input type=\"hidden\" name=\"action\" value=\"tokenize\">
 
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\"></p>
+<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
 </div>
 <div class=\"col-md-6\">
-<FORM ACTION=\"vts/detokenize.php\" METHOD=\"POST\">
+<FORM ACTION=\"vts/detokenize.php\" METHOD=\"POST\" id=\"formDetok\">
 
-<BR>Input to detokenize:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
+<BR>Input to detokenize:  <INPUT  id=\"detokInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
 <BR>
      Format:  
-	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> FPE Templa
+	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> FPE Template
 	<input type=\"radio\" name=\"template\" value=\"Numbers-Group_Key1\"> Numbers 
 	<input type=\"radio\" name=\"template\" value=\"Alpha-Group_Key1\"> Alpha
 	<input type=\"radio\" name=\"template\" value=\"ASCII-Group_Key1\"> ASCII
@@ -82,125 +82,99 @@ print "
 <input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
 <input type=\"hidden\" name=\"action\" value=\"tokenize\">
 
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\"></p>
+<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
 </div>
 </td> 
 </div>
 <div class=\"row\">
-<TR><td bgcolor=#dddddd><b>Encryption :</b></td><TR>
+<TR><td bgcolor=#dddddd><b>Encryption (AES 256):</b></td><TR>
 <TD>
 <div class=\"col-md-6\">
-<FORM ACTION=\"vae/encrypt.php\" METHOD=\"POST\">
+<FORM ACTION=\"vae/encrypt.php\" METHOD=\"POST\" id=\"formEncrypt\">
 
-<BR>Input to Encrypt:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
+<BR>Input to Encrypt:  <INPUT id=\"encryptInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
 <BR>
-     Format:  
-	<input type=\"radio\" name=\"key\" value=\"java_test_key_sym\" checked> Symetric Key
-	<input type=\"radio\" name=\"key\" value=\"Numbers-Group_Key1\"> Numbers 
-	<input type=\"radio\" name=\"key\" value=\"Alpha-Group_Key1\"> Alpha
-	<input type=\"radio\" name=\"key\" value=\"ASCII-Group_Key1\"> ASCII
-<BR><BR>
 <input type=\"hidden\" name=\"user\" value=\"$user\">
 <input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
 <input type=\"hidden\" name=\"action\" value=\"tokenize\">
+<input type=\"hidden\" name=\"key\" value=\"java_test_key_sym\">
 
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\"></p>
+<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
 </div>
 <div class=\"col-md-6\">
-<FORM ACTION=\"vae/decrypt.php\" METHOD=\"POST\">
+<FORM ACTION=\"vae/decrypt.php\" METHOD=\"POST\" id=\"formDecrypt\">
 
-<BR>Input to decrypt:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
+<BR>Input to decrypt:  <INPUT  id=\"decryptInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
 <BR>
-     Format:  
-	<input type=\"radio\" name=\"key\" value=\"java_test_key_sym\" checked> Symetric Key
-	<input type=\"radio\" name=\"key\" value=\"Numbers-Group_Key1\"> Numbers 
-	<input type=\"radio\" name=\"key\" value=\"Alpha-Group_Key1\"> Alpha
-	<input type=\"radio\" name=\"key\" value=\"ASCII-Group_Key1\"> ASCII
-<BR><BR>
 <input type=\"hidden\" name=\"user\" value=\"$user\">
 <input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
 <input type=\"hidden\" name=\"action\" value=\"tokenize\">
+<input type=\"hidden\" name=\"key\" value=\"java_test_key_sym\">
 
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\"></p>
+<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
 </div>
 </td> 
 </div>
 <div class=\"row\">
-<TR><td bgcolor=#dddddd><b>Signing :</b></td><TR>
+<TR><td bgcolor=#dddddd><b>Signing (RSA 2048):</b></td><TR>
 <TD>
 <div class=\"col-md-6\">
-<FORM ACTION=\"vae/signing.php\" METHOD=\"POST\">
+<FORM ACTION=\"vae/signing.php\" METHOD=\"POST\" id=\"formSign\">
 
-<BR>Input to Sign:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
+<BR>Input to Sign:  <INPUT  id=\"signInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
 <BR>
-     Format:  
-	<input type=\"radio\" name=\"key\" value=\"vae-keypair\" checked> Asymetric Key
-	<input type=\"radio\" name=\"key\" value=\"Numbers-Group_Key1\"> Numbers 
-	<input type=\"radio\" name=\"key\" value=\"Alpha-Group_Key1\"> Alpha
-	<input type=\"radio\" name=\"key\" value=\"ASCII-Group_Key1\"> ASCII
-<BR><BR>
 <input type=\"hidden\" name=\"user\" value=\"$user\">
 <input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
 <input type=\"hidden\" name=\"action\" value=\"tokenize\">
-
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\"></p>
+<input type=\"hidden\" name=\"key\" value=\"vae-keypair\">
+<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
 </div>
 <div class=\"col-md-6\">
-<FORM ACTION=\"vae/verify.php\" METHOD=\"POST\">
+<FORM ACTION=\"vae/verify.php\" METHOD=\"POST\" id=\"formVerify\">
 
-<BR>Input to Verify:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
+<BR>Input to Verify:  <INPUT  id=\"signToVerifyInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
 <BR>
-Signature: <INPUT  NAME=\"sign\"  size=\"30\" maxlength=\"500\">
-<BR>
-     Format:  
-	<input type=\"radio\" name=\"key\" value=\"vae-keypair\" checked> Asymetric Key
-	<input type=\"radio\" name=\"key\" value=\"Numbers-Group_Key1\"> Numbers 
-	<input type=\"radio\" name=\"key\" value=\"Alpha-Group_Key1\"> Alpha
-	<input type=\"radio\" name=\"key\" value=\"ASCII-Group_Key1\"> ASCII
-<BR><BR>
+Signature: <INPUT  id=\"verifyInput\" NAME=\"sign\"  size=\"30\" maxlength=\"500\">
+<p id=\"resultSig\"></p>
 <input type=\"hidden\" name=\"user\" value=\"$user\">
 <input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
 <input type=\"hidden\" name=\"action\" value=\"tokenize\">
+<input type=\"hidden\" name=\"key\" value=\"vae-keypair\">
 
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\"></p>
+<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 
 </FORM>
 </div>
 </td> 
 </div>
 <div class=\"row\">
-<TR><td bgcolor=#dddddd><b>Digest :</b></td><TR>
+<TR><td bgcolor=#dddddd><b>Digest (SHA 256):</b></td><TR>
 <TD>
 <div class=\"col-md-6\">
-<FORM ACTION=\"vae/digest.php\" METHOD=\"POST\">
+<FORM ACTION=\"vae/digest.php\" METHOD=\"POST\" id=\"formDigest\">
 
-<BR>Input to Digest:  <INPUT  NAME=\"data\"  size=\"30\" maxlength=\"25\">
-<BR>
-     Format:  
-	<input type=\"radio\" name=\"algo\" value=\"SHA256\" checked> SHA256
-	<input type=\"radio\" name=\"algo\" value=\"Numbers-Group_Key1\"> Numbers 
-	<input type=\"radio\" name=\"algo\" value=\"Alpha-Group_Key1\"> Alpha
-	<input type=\"radio\" name=\"algo\" value=\"ASCII-Group_Key1\"> ASCII
-<BR><BR>
+<BR>Input to Digest:  <INPUT id=\"digestInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
+<p id=\"resultDigest\"></p>
 <input type=\"hidden\" name=\"user\" value=\"$user\">
 <input type=\"hidden\" name=\"passwd\" value=\"$passwd\">
 <input type=\"hidden\" name=\"action\" value=\"tokenize\">
-
-<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\"></p>
-
+<input type=\"hidden\" name=\"algo\" value=\"SHA256\">
+<INPUT TYPE=\"SUBMIT\" NAME=\"SUBMIT\" VALUE=\"SUBMIT\">
 </FORM>
 </div>
 </td> 
 </div>
-</table> ";
+</table>
+<script src=\"js/asynchronousCalls.js\"></script> 
+";
 print 	"
 	<table width=100% border=1>
 	<TR>

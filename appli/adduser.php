@@ -95,35 +95,27 @@ if (isset($_POST['ssn'])) {
 }
 
 $vtsh = new VTSHelper();
-$birthDate_tokenized = $vtsh->tokenize($tokengroup, $birthDate, 'datetemplate', $user, $passwd);
+$birthDate_tokenized = $vtsh->tokenize('CustomerData', $birthDate, 'datetemplate', $user, $passwd);
 if ($birthDate_tokenized == 'KO')
   die("Tokenization Forbidden");
-$phonenumber_tokenized = $vtsh->tokenize($tokengroup, $phoneNumber, 'phonenumber', $user, $passwd);  
+$phonenumber_tokenized = $vtsh->tokenize('CustomerData', $phoneNumber, 'phonenumber', $user, $passwd);  
 print "phonenumber  : ".$phonenumber_tokenized;
 
-$ssn_tokenized = $vtsh->tokenize($tokengroup, $ssn, 'ssn', $user,$passwd);
+$ssn_tokenized = $vtsh->tokenize('CustomerData', $ssn, 'ssn', $user,$passwd);
 print "SSN  : ".$ssn_tokenized;
-$postcode_tokenized = $vtsh->tokenize($tokengroup, $postcode, 'phonenumber', $user, $passwd);  
+$postcode_tokenized = $vtsh->tokenize('CustomerData', $postcode, 'phonenumber', $user, $passwd);  
 
 print "Postcode : ".$postcode_tokenized;
-$cardnumber_tokenized = $vtsh->tokenize($tokengroup, $cardNumber, 'creditcard', $user, $passwd);  
+$cardnumber_tokenized = $vtsh->tokenize('PaymentData', $cardNumber, 'creditcard', $user, $passwd);  
 print "cardNumber : ".$cardnumber_tokenized;
-$expiredate_tokenized = $vtsh->tokenize($tokengroup, $expiredate, 'shortdate', $user, $passwd);  
+$expiredate_tokenized = $vtsh->tokenize('PaymentData', $expiredate, 'shortdate', $user, $passwd);  
 print "expiredate : ".$expiredate_tokenized;
 $cvv_tokenized = 0;
 if ($cvv !== 0) {
-  $cvv_tokenized = $vtsh->tokenize($tokengroup, $cvv, 'cvv', $user, $passwd);
+  $cvv_tokenized = $vtsh->tokenize('PaymentData', $cvv, 'cvv', $user, $passwd);
 
 }
 print "cvv : ".$cvv_tokenized;
-//Save the encrypted data
-$id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birthDate_tokenized, $phonenumber_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $cardnumber_tokenized, $expiredate_tokenized, $cvv_tokenized);
-
-
-//Save the customer in clear
-$dbh = new DBHelper();
-$id = $dbh->addCustomer('customer_clear', $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardNumber, $expiredate, $cvv);
-print 'after first insert';
 //Create Encrypted Row
 $vaeh = new VAEHelper();
 $firstname_encrypted = $vaeh->encrypt($firstname, $encryptionKey);
@@ -138,6 +130,12 @@ print "Address : ".$address_encrypted;
 $city_encrypted = $vaeh->encrypt($city, $encryptionKey);
 print "City : ".$city_encrypted;
 
+$dbh = new DBHelper();
+//Save the encrypted data
+$id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birthDate_tokenized, $phonenumber_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $cardnumber_tokenized, $expiredate_tokenized, $cvv_tokenized);
+
+//Save the customer in clear
+$dbh->addCustomer('customer_clear', $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardNumber, $expiredate, $cvv);
 
 
 //Saving the picture
@@ -170,12 +168,12 @@ if ($uploadOk == 0) {
     }
 }
 
-/*print "
+print "
   <BR><center><font size=5>
   <B>Customer Added.
   <BR><BR><BR><BR><BR><BR><BR>
   <a href=\"/appli/databaseview.php?user=$user&passwd=$passwd\">Home</a>
-  <meta http-equiv='refresh' content='1;url=/appli/databaseview.php?user=$user&passwd=$passwd' />";*/
+  <meta http-equiv='refresh' content='1;url=/appli/databaseview.php?user=$user&passwd=$passwd' />";
 ?>
 </body>
 </html>
