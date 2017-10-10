@@ -50,92 +50,80 @@ include '../utils/DBHelper.php';
 include '../utils/VAEHelper.php';
 include '../utils/VTSHelper.php';
 
+$vtsh = new VTSHelper();
+$vaeh = new VAEHelper();
+
 //Retrive all form data
 $firstname = $_POST['name'];
+$firstname_encrypted = $vaeh->encrypt($firstname, $encryptionKey);
 $lastname = $_POST['surname'];
-$birthDate = $_POST['datepicker'];
-$cardNumber = '';
-if (isset($_POST['card-number']))
+$lastname_encrypted = $vaeh->encrypt($lastname, $encryptionKey);
+$birthDate = date("Y/m/d", strtotime($_POST['datepicker']));
+$birthDate_tokenized = $vtsh->tokenize('CustomerData', $birthDate, 'datetemplate', $user, $passwd);
+$cardNumber = null;
+$cardnumber_tokenized = null;
+if (isset($_POST['card-number'])) {
   $cardNumber = $_POST['card-number'];
-$expiredate = '';
+  $cardnumber_tokenized = $vtsh->tokenize('PaymentData', $cardNumber, 'creditcard', $user, $passwd);
+}
+$expireDate = null;
+$expireDate_tokenized = null;
 if (isset($_POST['expiry-month']) && isset($_POST['expiry-year']) && $_POST['expiry-month'] !== 'Month' && $_POST['expiry-year']) {
-  $expiredate = $_POST['expiry-month'].'/'.$_POST['expiry-year'];
+  $expireDate = $_POST['expiry-year'].$_POST['expiry-month'].'/01';
+  $expireDate_tokenized = $vtsh->tokenize('PaymentData', $expiredate, 'shortdate', $user, $passwd);
 }
 //$expireYear = $_POST['expiry-year'];
-$cvv = 0;
+$cvv = null;
+$cvv_tokenized = null;
 if (isset($_POST['cvv']) && $_POST['cvv'] !== '') {
   $cvv = $_POST['cvv'];
+  $cvv_tokenized = $vtsh->tokenize('PaymentData', $cvv, 'cvv', $user, $passwd);
 }
-$phoneNumber = '';
-if (isset($_POST['phonenumber'])) {
-  $phoneNumber = $_POST['phonenumber'];  
+$phoneNumber = null;
+$phonenumber_tokenized = null;
+if (isset($_POST['phonenumber']) && $_POST['phonenumber'] !== '') {
+  $phoneNumber = $_POST['phonenumber'];
+  $phonenumber_tokenized = $vtsh->tokenize('CustomerData', $phoneNumber, 'phonenumber', $user, $passwd);  
 }
-$nationality = '';
-if (isset($_POST['nationality'])) {
+$nationality = null;
+if (isset($_POST['nationality']) && $_POST['nationality'] !== '') {
   $nationality = $_POST['nationality'];  
 }
-$address = '';
-if (isset($_POST['address'])) {
+$address = null;
+$address_encrypted = null;
+if (isset($_POST['address']) && $_POST['address'] !== '') {
   $address = $_POST['address'];
+  $address_encrypted = $vaeh->encrypt($address, $encryptionKey);
 }
-$city = '';
-if (isset($_POST['city'])) {
-  $city = $_POST['city'];  
+$city = null;
+$city_encrypted = null;
+if (isset($_POST['city']) && $_POST['city'] !== '') {
+  $city = $_POST['city'];
+  $city_encrypted = $vaeh->encrypt($city, $encryptionKey);  
 }
-$postcode = '';
-if (isset($_POST['postcode'])) {
-  $postcode = $_POST['postcode'];  
+$postcode = null;
+$postcode_tokenized = null;
+if (isset($_POST['postcode']) && $_POST['postcode'] !== '') {
+  $postcode = $_POST['postcode'];
+  $postcode_tokenized = $vtsh->tokenize('CustomerData', $postcode, 'phonenumber', $user, $passwd);  
 }
-$country = '';
-if (isset($_POST['country'])) {
+$country = null;
+if (isset($_POST['country']) && $_POST['country'] !== '') {
   $country = $_POST['country'];  
 }
-if (isset($_POST['ssn'])) {
+$ssn = null;
+$ssn_tokenized = null;
+if (isset($_POST['ssn']) && $_POST['ssn'] !== '') {
   $ssn = $_POST['ssn'];
+  $ssn_tokenized = $vtsh->tokenize('CustomerData', $ssn, 'ssn', $user,$passwd);
 }
-
-$vtsh = new VTSHelper();
-$birthDate_tokenized = $vtsh->tokenize('CustomerData', $birthDate, 'datetemplate', $user, $passwd);
-if ($birthDate_tokenized == 'KO')
-  die("Tokenization Forbidden");
-$phonenumber_tokenized = $vtsh->tokenize('CustomerData', $phoneNumber, 'phonenumber', $user, $passwd);  
-print "phonenumber  : ".$phonenumber_tokenized;
-
-$ssn_tokenized = $vtsh->tokenize('CustomerData', $ssn, 'ssn', $user,$passwd);
-print "SSN  : ".$ssn_tokenized;
-$postcode_tokenized = $vtsh->tokenize('CustomerData', $postcode, 'phonenumber', $user, $passwd);  
-
-print "Postcode : ".$postcode_tokenized;
-$cardnumber_tokenized = $vtsh->tokenize('PaymentData', $cardNumber, 'creditcard', $user, $passwd);  
-print "cardNumber : ".$cardnumber_tokenized;
-$expiredate_tokenized = $vtsh->tokenize('PaymentData', $expiredate, 'shortdate', $user, $passwd);  
-print "expiredate : ".$expiredate_tokenized;
-$cvv_tokenized = 0;
-if ($cvv !== 0) {
-  $cvv_tokenized = $vtsh->tokenize('PaymentData', $cvv, 'cvv', $user, $passwd);
-
-}
-print "cvv : ".$cvv_tokenized;
-//Create Encrypted Row
-$vaeh = new VAEHelper();
-$firstname_encrypted = $vaeh->encrypt($firstname, $encryptionKey);
-print "Firstname  : ".$firstname_encrypted;
-$lastname_encrypted = $vaeh->encrypt($lastname, $encryptionKey);
-print "Lastname : ".$lastname_encrypted;
-$address_encrypted = '';
-if ($address !== '') {
-  $address_encrypted = $vaeh->encrypt($address, $encryptionKey);  
-}
-print "Address : ".$address_encrypted;
-$city_encrypted = $vaeh->encrypt($city, $encryptionKey);
-print "City : ".$city_encrypted;
 
 $dbh = new DBHelper();
 //Save the encrypted data
-$id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birthDate_tokenized, $phonenumber_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $cardnumber_tokenized, $expiredate_tokenized, $cvv_tokenized);
+$id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birthDate_tokenized, $phonenumber_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $cardnumber_tokenized, $expireDate_tokenized, $cvv_tokenized);
 
 //Save the customer in clear
-$dbh->addCustomer('customer_clear', $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardNumber, $expiredate, $cvv);
+$dbh->addCustomer('customer_clear', $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardNumber, $expireDate, $cvv);
 
 
 //Saving the picture
@@ -167,13 +155,6 @@ if ($uploadOk == 0) {
         echo "Sorry, there was an error uploading your file.";
     }
 }
-
-print "
-  <BR><center><font size=5>
-  <B>Customer Added.
-  <BR><BR><BR><BR><BR><BR><BR>
-  <a href=\"/appli/databaseview.php?user=$user&passwd=$passwd\">Home</a>
-  <meta http-equiv='refresh' content='1;url=/appli/databaseview.php?user=$user&passwd=$passwd' />";
 ?>
 </body>
 </html>

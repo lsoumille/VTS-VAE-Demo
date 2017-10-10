@@ -74,7 +74,17 @@ class DBHelper {
 
 	public function addCustomer($tablename, $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv) {
 		$connection = $this->createConnection();
-		$query = "insert into ".$tablename." (firstname, lastname, birthDate, phoneNumber, nationality, ssn, address, city, postcode, country, cardNumber, expirationDate, cvv) values('$firstname', '$lastname', '$birthDate', '$phoneNumber', '$nationality', '$ssn', '$address', '$city', '$postcode', '$country', '$cardnumber', '$expirationdate', '$cvv')";
+		$phoneNumber = ($phoneNumber === null ? "null" : "'".$phoneNumber."'");
+		$nationality = ($nationality === null ? "null" : "'".$nationality."'");
+		$ssn = ($ssn === null ? "null" : "'".$ssn."'");
+		$address = ($address === null ? "null" : "'".$address."'");
+		$city = ($city === null ? "null" : "'".$city."'");
+		$postcode = ($postcode === null ? "null" : "'".$postcode."'");
+		$country = ($country === null ? "null" : "'".$country."'");
+		$cardnumber = ($cardnumber === null ? "null" : "'".$cardnumber."'");
+		$expirationdate = ($expirationdate === null ? "null" : "'".$expirationdate."'");
+		$cvv = ($cvv === null ? "null" : "'".$cvv."'");
+		$query = "insert into ".$tablename." (firstname, lastname, birthDate, phoneNumber, nationality, ssn, address, city, postcode, country, cardNumber, expirationDate, cvv) values('$firstname', '$lastname', '$birthDate', $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv)";
 		print $query.'\n';
 		$result = $this->performQuery($connection, $query);
 		$this->closeConnection($connection);
