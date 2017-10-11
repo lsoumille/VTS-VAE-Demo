@@ -85,7 +85,7 @@ class DBHelper {
 		$expirationdate = ($expirationdate === null ? "null" : "'".$expirationdate."'");
 		$cvv = ($cvv === null ? "null" : "'".$cvv."'");
 		$query = "insert into ".$tablename." (firstname, lastname, birthDate, phoneNumber, nationality, ssn, address, city, postcode, country, cardNumber, expirationDate, cvv) values('$firstname', '$lastname', '$birthDate', $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv)";
-		print $query.'\n';
+		//print $query.'\n';
 		$result = $this->performQuery($connection, $query);
 		$this->closeConnection($connection);
 		return $result;

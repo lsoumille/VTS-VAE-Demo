@@ -115,7 +115,7 @@ foreach ($results as $line) {
   $postcode = ($line['postcode'] !== null ? $vtsh->detokenize($tokengroup, $line['postcode'], 'phonenumber', $user, $passwd) : $line['postcode']);
   $country = $line['country'];
   $cardnumber = ($line['cardNumber'] !== null ? $vtsh->detokenize($tokengroup, $line['cardNumber'], 'cardnumber', $user, $passwd) : $line['cardNumber']);
-  $expirationDate = ($line['expirationDate'] !== null ? $vtsh->detokenize($tokengroup, $line['expirationDate'], 'shortdate', $user, $passwd) : $line['expirationDate']);
+  $expirationDate = ($line['expirationDate'] !== null ? $vtsh->detokenize($tokengroup, $line['expirationDate'], 'datetemplate_forcb', $user, $passwd) : $line['expirationDate']);
   $cvv = ($line['cvv'] !== null ? $vtsh->detokenize($tokengroup, $line['cvv'], 'cvv', $user, $passwd) : $line['cvv']);
 
   print "<tr>

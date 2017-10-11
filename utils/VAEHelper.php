@@ -62,7 +62,7 @@ class VAEHelper {
 
 		if (isset($obj->message))
 		  return $obj->message;
-		else
+		else 
 		  return $obj->text;
 	}
 }

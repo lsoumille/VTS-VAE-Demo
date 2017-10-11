@@ -3,6 +3,7 @@
   <TITLE>Application Demo</TITLE>
 <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+<script src="/js/testUser.js"></script>
 
 
 </HEAD>
@@ -211,7 +212,6 @@
         });
     });
 </script>
-<script src="/js/asynchronousCalls.js"></script>
     </div>
   </div>
 <footer>

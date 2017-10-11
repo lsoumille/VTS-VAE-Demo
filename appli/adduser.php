@@ -1,49 +1,3 @@
-<html>
-<head>
-<title>Vormetric Tokenization Server Demo</title>
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-<link href="/css/vormetric.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/css/login.css" />
-
-
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-<link href="/css/skin.css" rel="stylesheet">
-
-<meta charset="UTF-8" />
-</head>
-
-<body class="slideToLeft" style="left: 0px;">
-
-<header class="container-fluid">
-  <div class="col-md-6"> <a href="#" class="site-logo"><img src="../vormetric-logo.png"></a>
-      <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Demo</h3>
-    </div>
-    <div class="col-md-2">
-      <ul class="nav nav-tabs">
-        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/demo.php">Vormetric Applicative Features</a></h4></li>
-      </ul>
-    </div>
-    <div class="col-md-2"> 
-      <ul class="nav nav-tabs">
-        <li><h4 class="list-inline pull-right rightsideIcons"><a href="/appli/databaseview.php">Application Integration</h4></li>
-      </ul>
-    </div>
-    <div class="col-md-2">
-      <h4 class="list-inline pull-right rightsideIcons">
-  <?php
-    include '../config.php';
-
-    print "Welcome, $user. <a href=\"/index.html\">Logout</a>"; 
-  ?>
-    </h4>
-  </div>
-</header>
-
 <?php
 include '../config.php';
 include '../utils/DBHelper.php';
@@ -69,8 +23,12 @@ if (isset($_POST['card-number'])) {
 $expireDate = null;
 $expireDate_tokenized = null;
 if (isset($_POST['expiry-month']) && isset($_POST['expiry-year']) && $_POST['expiry-month'] !== 'Month' && $_POST['expiry-year']) {
-  $expireDate = $_POST['expiry-year'].$_POST['expiry-month'].'/01';
-  $expireDate_tokenized = $vtsh->tokenize('PaymentData', $expiredate, 'shortdate', $user, $passwd);
+  $expireDate = '20'.$_POST['expiry-year'].'/'.$_POST['expiry-month'].'/01';
+
+  //print "##### ".$expireDate. " ####";
+  //print "##### ".$_POST['expiry-year']. " ####";
+  //print "##### ".$_POST['expiry-month']. " ####";
+  $expireDate_tokenized = $vtsh->tokenize('PaymentData', $expireDate, 'datetemplate_forcb', $user, $passwd);
 }
 //$expireYear = $_POST['expiry-year'];
 $cvv = null;
@@ -131,30 +89,36 @@ $target_file = "../img/".$id;
 $imageFileType = pathinfo($_FILES["picture"]["name"],PATHINFO_EXTENSION);
 
 $uploadOk = 1;
-$check = getimagesize($_FILES["picture"]["tmp_name"]);
+$check = false;
+if ($_FILES["picture"]["tmp_name"] !== null && $_FILES["picture"]["tmp_name"] !== '') {
+  $check = getimagesize($_FILES["picture"]["tmp_name"]); 
+}
 if($check !== false) {
-    echo "File is an image - " . $check["mime"] . ".";
+    //echo "File is an image - " . $check["mime"] . ".";
     $uploadOk = 1;
 } else {
-    echo "File is not an image.";
+    //echo "File is not an image.";
     $uploadOk = 0;
 }
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 && $imageFileType != "gif" ) {
-    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
     $uploadOk = 0;
 }
 
 if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
+//    echo "Sorry, your file was not uploaded.";
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["picture"]["tmp_name"], "../img/".$id.'.jpg')) {
-        echo "The file ". basename( $_FILES["picture"]["name"]). " has been uploaded.";
+        //echo "The file ". basename( $_FILES["picture"]["name"]). " has been uploaded.";
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        //echo "Sorry, there was an error uploading your file.";
     }
 }
+//echo "Done";
+
+$array = array('test' => 'test');
+echo json_encode($array);
+
 ?>
-</body>
-</html>

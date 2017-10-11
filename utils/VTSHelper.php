@@ -33,8 +33,10 @@ class VTSHelper {
 		// return JSON into PHP array
 		$obj = json_decode($tok_values);
 
-		if (strcmp($obj->status, "Succeed") !== 0)
+		if (strcmp($obj->status, "Succeed") !== 0) {
+			var_dump($obj);
   			return 'KO';
+		}
 		else
   			return $obj->token;
 		
