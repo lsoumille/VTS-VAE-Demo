@@ -20,21 +20,29 @@ $(document).ready(Onready);
 	};
 
 	function OnsubmitUser(data){
+		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
-			data: $(this).serialize(),
+			data:  new FormData(this),
+			contentType: false,
+    	    processData:false,
+    	    success: function(result){
+				window.location.replace("http://localhost:8081/appli/databaseview.php");
+			},
+			error: function(){
+
+			}
 		})
-		.done(function(result){
+		/*.done(function(result){
 			window.location.replace("http://localhost:8081/appli/databaseview.php");	
-		})
-		.error(function(){
-			alert("Error, User was not created");
-		});
+			console.log(result);
+		})*/;
 		return false;
 	};
 
 	function OnsubmitTok(data){
+		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
@@ -44,14 +52,12 @@ $(document).ready(Onready);
 			$('#detokInput').val(result);
 			$('#tokInput').val("");
 			reloadTransfoDB();
-		})
-		.error(function(){
-			alert("Error, Token was not generated");
 		});
 		return false;
 	};
 
 	function OnsubmitDetok(data){
+		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
@@ -61,14 +67,12 @@ $(document).ready(Onready);
 			$('#tokInput').val(result);
 			$('#detokInput').val("");
 			reloadTransfoDB();	
-		})
-		.error(function(){
-			alert("Error, Data was not generated");
 		});
 		return false;
 	};
 
 	function OnsubmitEncrypt(data){
+		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
@@ -78,14 +82,12 @@ $(document).ready(Onready);
 			$('#decryptInput').val(result);
 			$('#encryptInput').val("");
 			reloadTransfoDB();	
-		})
-		.error(function(){
-			alert("Error, Encrypted text was not generated");
 		});
 		return false;
 	};
 
 	function OnsubmitDecrypt(data){
+		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
@@ -95,14 +97,12 @@ $(document).ready(Onready);
 			$('#encryptInput').val(result);
 			$('#decryptInput').val("");
 			reloadTransfoDB();
-		})
-		.error(function(){
-			alert("Error, Decrypted text was not generated");
 		});
 		return false;
 	};
 
 	function OnsubmitSign(data){
+		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
@@ -112,14 +112,12 @@ $(document).ready(Onready);
 			$('#signToVerifyInput').val($('#signInput').val())
 			$('#verifyInput').val(result);
 			reloadTransfoDB();
-		})
-		.error(function(){
-			alert("Error, Signature was not generated");
 		});
 		return false;
 	};
 
 	function OnsubmitVerify(data){
+		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
@@ -131,14 +129,12 @@ $(document).ready(Onready);
 			$('#verifyInput').val("");
 			$('#resultSig').text("Result : " + result);
 			reloadTransfoDB();
-		})
-		.error(function(){
-			alert("Error, Verifying process is down");
 		});
 		return false;
 	};
 
 	function OnsubmitDigest(data){
+		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
@@ -148,13 +144,15 @@ $(document).ready(Onready);
 			$('#digestInput').val("");
 			$('#resultDigest').text(result);
 			reloadTransfoDB();	
-		})
-		.error(function(){
-			alert("Error, Decrypted text was not generated");
 		});
 		return false;
 	};
 
 	function reloadTransfoDB() {
 		document.getElementById('transfoDB').contentWindow.location.reload();
+	}
+
+	function stopPropagation(data) {
+		data.preventDefault();
+		//data.stopImmediatePropagation();
 	}

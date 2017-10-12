@@ -1,26 +1,28 @@
 <?php 
 class VTSHelper {
 
-	const tokurl = "https://192.168.99.120/vts/rest/v2.0/tokenize";
-	const detokurl = "https://192.168.99.120/vts/rest/v2.0/detokenize";
+	const tok_url = "https://192.168.99.120/vts/rest/v2.0/tokenize";
+	const detok_url = "https://192.168.99.120/vts/rest/v2.0/detokenize";
 
+
+	//Tokenize data with defined tokentemplate and tokengroup by sending them to the VTS REST API 
 	public function tokenize($tokengroup, $data, $tokentemplate, $user, $password) {
 		if ($data === '')
 			return '';
 
 		//The JSON data.
-		$jsonData = array( 'tokengroup' => $tokengroup, 'data' => $data, 'tokentemplate' => $tokentemplate);
+		$json_data = array( 'tokengroup' => $tokengroup, 'data' => $data, 'tokentemplate' => $tokentemplate);
 
 		//Initiate cURL.
 		$tok = curl_init();
 		curl_setopt_array($tok, array(
    			CURLOPT_RETURNTRANSFER => 1,
-    		CURLOPT_URL => self::tokurl,
+    		CURLOPT_URL => self::tok_url,
     		CURLOPT_POST => true,
     		CURLOPT_SSL_VERIFYPEER => false,
     		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
     		CURLOPT_USERPWD => $user.":".$password,
-    		CURLOPT_POSTFIELDS => json_encode($jsonData),
+    		CURLOPT_POSTFIELDS => json_encode($json_data),
     		CURLOPT_SSL_VERIFYHOST => false,
     		CURLOPT_FOLLOWLOCATION => true,
     		CURLOPT_HTTPHEADER => array('Content-Type: application/json')
@@ -33,31 +35,30 @@ class VTSHelper {
 		// return JSON into PHP array
 		$obj = json_decode($tok_values);
 
-		if (strcmp($obj->status, "Succeed") !== 0) {
-			var_dump($obj);
+		if (strcmp($obj->status, "Succeed") !== 0)
   			return 'KO';
-		}
 		else
   			return $obj->token;
 		
 	}
 
+	//Detokenize data with defined tokentemplate and tokengroup by sending them to the VTS REST API
 	public function detokenize($tokengroup, $token, $tokentemplate, $user, $password) {
 		if ($token === '')
 			return '';
 		//The JSON data.
-		$jsonData = array( 'tokengroup' => $tokengroup, 'token' => $token, 'tokentemplate' => $tokentemplate);
+		$json_data = array( 'tokengroup' => $tokengroup, 'token' => $token, 'tokentemplate' => $tokentemplate);
 
 		//Initiate cURL.
 		$tok = curl_init();
 		curl_setopt_array($tok, array(
     		CURLOPT_RETURNTRANSFER => 1,
-    		CURLOPT_URL => self::detokurl,
+    		CURLOPT_URL => self::detok_url,
     		CURLOPT_POST => true,
     		CURLOPT_SSL_VERIFYPEER => false,
     		CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
     		CURLOPT_USERPWD => $user.":".$password,
-    		CURLOPT_POSTFIELDS => json_encode($jsonData),
+    		CURLOPT_POSTFIELDS => json_encode($json_data),
     		CURLOPT_SSL_VERIFYHOST => false,
     		CURLOPT_FOLLOWLOCATION => true,
     		CURLOPT_HTTPHEADER => array('Content-Type: application/json')

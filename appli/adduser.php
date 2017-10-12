@@ -1,4 +1,4 @@
-<?php
+ <?php
 include '../config.php';
 include '../utils/DBHelper.php';
 include '../utils/VAEHelper.php';
@@ -8,117 +8,105 @@ $vtsh = new VTSHelper();
 $vaeh = new VAEHelper();
 
 //Retrive all form data
-$firstname = $_POST['name'];
-$firstname_encrypted = $vaeh->encrypt($firstname, $encryptionKey);
-$lastname = $_POST['surname'];
-$lastname_encrypted = $vaeh->encrypt($lastname, $encryptionKey);
-$birthDate = date("Y/m/d", strtotime($_POST['datepicker']));
-$birthDate_tokenized = $vtsh->tokenize('CustomerData', $birthDate, 'datetemplate', $user, $passwd);
-$cardNumber = null;
-$cardnumber_tokenized = null;
+$firstname            = $_POST['name'];
+$firstname_encrypted  = $vaeh->encrypt($firstname, $encryption_key);
+$lastname             = $_POST['surname'];
+$lastname_encrypted   = $vaeh->encrypt($lastname, $encryption_key);
+$birth_date            = date("Y/m/d", strtotime($_POST['datepicker']));
+$birth_date_tokenized  = $vtsh->tokenize('CustomerData', $birth_date, 'datetemplate', $user, $passwd);
+$card_number           = null;
+$card_number_tokenized = null;
 if (isset($_POST['card-number'])) {
-  $cardNumber = $_POST['card-number'];
-  $cardnumber_tokenized = $vtsh->tokenize('PaymentData', $cardNumber, 'creditcard', $user, $passwd);
+    $card_number           = $_POST['card-number'];
+    $card_number_tokenized = $vtsh->tokenize('PaymentData', $card_number, 'creditcard', $user, $passwd);
 }
-$expireDate = null;
-$expireDate_tokenized = null;
+$expire_date           = null;
+$expire_date_tokenized = null;
 if (isset($_POST['expiry-month']) && isset($_POST['expiry-year']) && $_POST['expiry-month'] !== 'Month' && $_POST['expiry-year']) {
-  $expireDate = '20'.$_POST['expiry-year'].'/'.$_POST['expiry-month'].'/01';
-
-  //print "##### ".$expireDate. " ####";
-  //print "##### ".$_POST['expiry-year']. " ####";
-  //print "##### ".$_POST['expiry-month']. " ####";
-  $expireDate_tokenized = $vtsh->tokenize('PaymentData', $expireDate, 'datetemplate_forcb', $user, $passwd);
+    $expire_date = '20' . $_POST['expiry-year'] . '/' . $_POST['expiry-month'] . '/01';
+    $expire_date_tokenized = $vtsh->tokenize('PaymentData', $expire_date, 'datetemplate_forcb', $user, $passwd);
 }
 //$expireYear = $_POST['expiry-year'];
-$cvv = null;
+$cvv           = null;
 $cvv_tokenized = null;
 if (isset($_POST['cvv']) && $_POST['cvv'] !== '') {
-  $cvv = $_POST['cvv'];
-  $cvv_tokenized = $vtsh->tokenize('PaymentData', $cvv, 'cvv', $user, $passwd);
+    $cvv           = $_POST['cvv'];
+    $cvv_tokenized = $vtsh->tokenize('PaymentData', $cvv, 'cvv', $user, $passwd);
 }
-$phoneNumber = null;
-$phonenumber_tokenized = null;
+$phone_number           = null;
+$phone_number_tokenized = null;
 if (isset($_POST['phonenumber']) && $_POST['phonenumber'] !== '') {
-  $phoneNumber = $_POST['phonenumber'];
-  $phonenumber_tokenized = $vtsh->tokenize('CustomerData', $phoneNumber, 'phonenumber', $user, $passwd);  
+    $phone_number           = $_POST['phonenumber'];
+    $phone_number_tokenized = $vtsh->tokenize('CustomerData', $phone_number, 'phonenumber', $user, $passwd);
 }
 $nationality = null;
 if (isset($_POST['nationality']) && $_POST['nationality'] !== '') {
-  $nationality = $_POST['nationality'];  
+    $nationality = $_POST['nationality'];
 }
-$address = null;
+$address           = null;
 $address_encrypted = null;
 if (isset($_POST['address']) && $_POST['address'] !== '') {
-  $address = $_POST['address'];
-  $address_encrypted = $vaeh->encrypt($address, $encryptionKey);
+    $address           = $_POST['address'];
+    $address_encrypted = $vaeh->encrypt($address, $encryption_key);
 }
-$city = null;
+$city           = null;
 $city_encrypted = null;
 if (isset($_POST['city']) && $_POST['city'] !== '') {
-  $city = $_POST['city'];
-  $city_encrypted = $vaeh->encrypt($city, $encryptionKey);  
+    $city           = $_POST['city'];
+    $city_encrypted = $vaeh->encrypt($city, $encryption_key);
 }
-$postcode = null;
+$postcode           = null;
 $postcode_tokenized = null;
 if (isset($_POST['postcode']) && $_POST['postcode'] !== '') {
-  $postcode = $_POST['postcode'];
-  $postcode_tokenized = $vtsh->tokenize('CustomerData', $postcode, 'phonenumber', $user, $passwd);  
+    $postcode           = $_POST['postcode'];
+    $postcode_tokenized = $vtsh->tokenize('CustomerData', $postcode, 'phonenumber', $user, $passwd);
 }
 $country = null;
 if (isset($_POST['country']) && $_POST['country'] !== '') {
-  $country = $_POST['country'];  
+    $country = $_POST['country'];
 }
-$ssn = null;
+$ssn           = null;
 $ssn_tokenized = null;
 if (isset($_POST['ssn']) && $_POST['ssn'] !== '') {
-  $ssn = $_POST['ssn'];
-  $ssn_tokenized = $vtsh->tokenize('CustomerData', $ssn, 'ssn', $user,$passwd);
+    $ssn           = $_POST['ssn'];
+    $ssn_tokenized = $vtsh->tokenize('CustomerData', $ssn, 'ssn', $user, $passwd);
 }
 
 $dbh = new DBHelper();
 //Save the encrypted data
-$id = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birthDate_tokenized, $phonenumber_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $cardnumber_tokenized, $expireDate_tokenized, $cvv_tokenized);
+$id  = $dbh->addCustomer('customer', $firstname_encrypted, $lastname_encrypted, $birth_date_tokenized, $phone_number_tokenized, $nationality, $ssn_tokenized, $address_encrypted, $city_encrypted, $postcode_tokenized, $country, $card_number_tokenized, $expire_date_tokenized, $cvv_tokenized);
 
 //Save the customer in clear
-$dbh->addCustomer('customer_clear', $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardNumber, $expireDate, $cvv);
+$dbh->addCustomer('customer_clear', $firstname, $lastname, $birth_date, $phone_number, $nationality, $ssn, $address, $city, $postcode, $country, $card_number, $expire_date, $cvv);
 
 
 //Saving the picture
-$target_file = "../img/".$id;
-$imageFileType = pathinfo($_FILES["picture"]["name"],PATHINFO_EXTENSION);
+$target_file   = "../img/" . $id;
+$image_file_type = pathinfo($_FILES["picture"]["name"], PATHINFO_EXTENSION);
 
-$uploadOk = 1;
-$check = false;
+var_dump($_FILES["picture"]);
+
+$upload_ok = 1;
+$check     = false;
 if ($_FILES["picture"]["tmp_name"] !== null && $_FILES["picture"]["tmp_name"] !== '') {
-  $check = getimagesize($_FILES["picture"]["tmp_name"]); 
+    $check = getimagesize($_FILES["picture"]["tmp_name"]);
 }
-if($check !== false) {
-    //echo "File is an image - " . $check["mime"] . ".";
-    $uploadOk = 1;
+if ($check !== false) {
+    echo "File is an image - " . $check["mime"] . ".";
+    $upload_ok = 1;
 } else {
-    //echo "File is not an image.";
-    $uploadOk = 0;
+    echo "File is not an image.";
+    $upload_ok = 0;
 }
-if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-&& $imageFileType != "gif" ) {
-    //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-    $uploadOk = 0;
+if ($image_file_type != "jpg" && $image_file_type != "png" && $image_file_type != "jpeg" && $image_file_type != "gif") {
+    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    $upload_ok = 0;
 }
 
-if ($uploadOk == 0) {
-//    echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
+if ($upload_ok != 0 && move_uploaded_file($_FILES["picture"]["tmp_name"], "../img/" . $id . '.jpg')) {
+    echo "The file ". basename( $_FILES["picture"]["name"]). " has been uploaded.";
 } else {
-    if (move_uploaded_file($_FILES["picture"]["tmp_name"], "../img/".$id.'.jpg')) {
-        //echo "The file ". basename( $_FILES["picture"]["name"]). " has been uploaded.";
-    } else {
-        //echo "Sorry, there was an error uploading your file.";
-    }
+    echo "Sorry, there was an error uploading your file.";
 }
-//echo "Done";
 
-$array = array('test' => 'test');
-echo json_encode($array);
-
-?>
+?> 

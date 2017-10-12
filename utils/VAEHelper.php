@@ -2,26 +2,27 @@
 class VAEHelper {
 
 	//Pin code used to access VAE library
-	const pinCode = "Test123!";
+	const pincode = "Test123!";
 
-	const encrypturl = "http://localhost:4567/crypt/";
-	const decrypturl = "http://localhost:4567/decrypt/";
+	const encrypt_url = "http://localhost:4567/crypt/";
+	const decrypt_url = "http://localhost:4567/decrypt/";
 
-	public function encrypt($toencrypt, $key) {
-		if ($toencrypt === '')
+	//Encrypt to_encrypt data using the key using REST API
+	public function encrypt($to_encrypt, $key) {
+		if ($to_encrypt === '')
 			return '';
 
 		//The POST data.
-		$postData = http_build_query(array( 'keyname' => $key, 'message' => $toencrypt));
+		$post_data = http_build_query(array( 'keyname' => $key, 'message' => $to_encrypt));
 
 		//Initiate cURL.
 		$tok = curl_init();
 
 		curl_setopt_array($tok, array(
 		    CURLOPT_RETURNTRANSFER => 1,
-		    CURLOPT_URL => (self::encrypturl).(self::pinCode),
+		    CURLOPT_URL => (self::encrypt_url).(self::pincode),
 		    CURLOPT_POST => true,
-		    CURLOPT_POSTFIELDS => $postData
+		    CURLOPT_POSTFIELDS => $post_data
 		));
 
 		//Execute the request
@@ -37,20 +38,21 @@ class VAEHelper {
 		  return $obj->text;
 	}
 
-	public function decrypt($todecrypt, $key) {
-		if ($todecrypt === '')
+	//Decrypt to_decrypt data using the key using REST API
+	public function decrypt($to_decrypt, $key) {
+		if ($to_decrypt === '')
 			return '';
 		//The POST data.
-		$postData = http_build_query(array( 'keyname' => $key, 'message' => $todecrypt));
+		$post_data = http_build_query(array( 'keyname' => $key, 'message' => $to_decrypt));
 
 		//Initiate cURL.
 		$tok = curl_init();
 
 		curl_setopt_array($tok, array(
 		    CURLOPT_RETURNTRANSFER => 1,
-		    CURLOPT_URL => (self::decrypturl).(self::pinCode),
+		    CURLOPT_URL => (self::decrypt_url).(self::pincode),
 		    CURLOPT_POST => true,
-		    CURLOPT_POSTFIELDS => $postData
+		    CURLOPT_POSTFIELDS => $post_data
 		));
 
 		//Execute the request

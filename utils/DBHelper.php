@@ -5,7 +5,7 @@ class DBHelper {
 		$mysqli = new mysqli("192.168.99.122", "admin", "admin", "vtsdemo");
 
 		if ($mysqli->connect_errno) {
-    		echo "Echec lors de la connexion à MySQL : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+    		echo "Error during MySQL connection : (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 		} else {
 			return $mysqli;
 		}
@@ -62,9 +62,10 @@ class DBHelper {
 		$query = "insert into transformation (action,input,output,comments) values('$action', '$beforeData', '$afterData', '$comments')";
 		$this->performQuery($connection, $query);
 		$this->closeConnection($connection);
-		return $result;
+		//return $result;
 	}
 
+	//Delete the row with the id inside the table defined in parameters
 	public function deleteById($table, $id) {
 		$connection = $this->createConnection();
 		$query = "delete from $table where id='$id'";
@@ -72,9 +73,10 @@ class DBHelper {
 		$this->closeConnection($connection);
 	}
 
-	public function addCustomer($tablename, $firstname, $lastname, $birthDate, $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv) {
+	//Add a new customer in the database
+	public function addCustomer($tablename, $firstname, $lastname, $birthDate, $phone_number, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv) {
 		$connection = $this->createConnection();
-		$phoneNumber = ($phoneNumber === null ? "null" : "'".$phoneNumber."'");
+		$phone_number = ($phone_number === null ? "null" : "'".$phone_number."'");
 		$nationality = ($nationality === null ? "null" : "'".$nationality."'");
 		$ssn = ($ssn === null ? "null" : "'".$ssn."'");
 		$address = ($address === null ? "null" : "'".$address."'");
@@ -84,7 +86,7 @@ class DBHelper {
 		$cardnumber = ($cardnumber === null ? "null" : "'".$cardnumber."'");
 		$expirationdate = ($expirationdate === null ? "null" : "'".$expirationdate."'");
 		$cvv = ($cvv === null ? "null" : "'".$cvv."'");
-		$query = "insert into ".$tablename." (firstname, lastname, birthDate, phoneNumber, nationality, ssn, address, city, postcode, country, cardNumber, expirationDate, cvv) values('$firstname', '$lastname', '$birthDate', $phoneNumber, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv)";
+		$query = "insert into ".$tablename." (firstname, lastname, birthDate, phoneNumber, nationality, ssn, address, city, postcode, country, cardNumber, expirationDate, cvv) values('$firstname', '$lastname', '$birthDate', $phone_number, $nationality, $ssn, $address, $city, $postcode, $country, $cardnumber, $expirationdate, $cvv)";
 		//print $query.'\n';
 		$result = $this->performQuery($connection, $query);
 		$this->closeConnection($connection);
