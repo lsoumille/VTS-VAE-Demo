@@ -22,7 +22,7 @@
     <header>
         <div>
             <div class="col-md-6">
-                <a href="#" class="site-logo"><img src="../vormetric-logo.png"></a>
+                <a href="/intro.php" class="site-logo"><img src="../vormetric-logo.png"></a>
                 <h3><span class="verticalPipe"></span>Add new customer</h3>
             </div>
             <div class="col-md-offset-4 col-md-2">
@@ -201,6 +201,6 @@
         <a href=javascript:window.open('http://www.vormetric.com')>About </a><span>|</span>
         <!-- <a href="javascript:void(0);">Support</a><span>|</span>
             <a href="javascript:void(0);">About</a><span>|</span>-->
-        Copyright &copy; 2016 Vormetric. Inc. All rights reserved.
+        Copyright &copy; 2017 Vormetric. Inc. All rights reserved.
     </footer>
 </html>

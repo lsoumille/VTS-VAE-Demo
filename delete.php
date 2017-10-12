@@ -17,7 +17,7 @@
         <header class="container-fluid">
             <div class="row">
                 <div class="col-xs-8">
-                    <a href="#" class="site-logo"><img src="img/v-logo.jpg"></a>
+                    <a href="/intro.php" class="site-logo"><img src="img/v-logo.jpg"></a>
                     <h3><span class="verticalPipe"></span><i class="fa fa-check-circle"></i>Vormetric Tokenisation Demo Server </h3>
                 </div>
                 <div class="col-xs-4">
