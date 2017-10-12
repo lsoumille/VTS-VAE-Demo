@@ -16,7 +16,7 @@
         <header class="container-fluid">
             <div class="row">
             <div class="col-md-6">
-                <a href="/intro.php" class="site-logo"><img src="vormetric-logo.png"></a>
+                <a href="/intro.php" class="site-logo"><img src="vormetric-logo.png"><img src="thales-logo.png"></a>
                 <h3><span class="verticalPipe"></span></i>Vormetric Demo</h3>
             </div>
             <div class="col-md-offset-4 col-md-2">

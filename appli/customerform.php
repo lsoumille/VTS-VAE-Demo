@@ -19,11 +19,10 @@
     <script type="text/javascript" src="/js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
     <script src="/js/asynchronousCalls.js"></script>
     
-    <header>
-        <div>
+    <header class="container-fluid">
             <div class="col-md-6">
-                <a href="/intro.php" class="site-logo"><img src="../vormetric-logo.png"></a>
-                <h3><span class="verticalPipe"></span>Add new customer</h3>
+                <a href="/intro.php" class="site-logo"><img src="../vormetric-logo.png"><img src="../thales-logo.png"></a>
+                <h3><span class="verticalPipe"></span></i>Customer Database</h3>
             </div>
             <div class="col-md-offset-4 col-md-2">
                 <h4 class="list-inline pull-right rightsideIcons">
@@ -31,11 +30,10 @@
                         include '../config.php';
                         
                         print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
-                        ?>
+                    ?>
                 </h4>
             </div>
-        </div>
-    </header>
+        </header>
     <div id="app_container" class="container-fluid">
         <div class="col-md-1 left-navigation">
             <ul class="list-unstyled">
