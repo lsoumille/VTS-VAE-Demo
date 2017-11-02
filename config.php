@@ -24,11 +24,13 @@
     $tokengroup = '';
     if ($user != "") { 
     	file_put_contents(__DIR__.'/credentials/login.txt', '');
-    	if ($user == 'FinancialUser') {
+    	if ($user == 'finance') {
     		$tokengroup = "PaymentData";
-    	} else {
+    	} else if ($user == 'admin' || $user == 'commerce') {
     		$tokengroup = "CustomerData";
-    	}
+    	} else {
+            $tokengroup = "Default";
+        }
     	file_put_contents(__DIR__.'/credentials/login.txt', $user.'|'.$passwd.'|'.$tokengroup);
     
     } else {

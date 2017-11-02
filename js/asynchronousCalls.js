@@ -28,16 +28,13 @@ $(document).ready(Onready);
 			contentType: false,
     	    processData:false,
     	    success: function(result){
+    	    	console.log(result);
 				window.location.replace("http://localhost:8081/appli/databaseview.php");
 			},
 			error: function(){
 
 			}
 		})
-		/*.done(function(result){
-			window.location.replace("http://localhost:8081/appli/databaseview.php");	
-			console.log(result);
-		})*/;
 		return false;
 	};
 
@@ -46,13 +43,18 @@ $(document).ready(Onready);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
-			data: $(this).serialize(),
+			data:  new FormData(this),
+			contentType: false,
+    	    processData:false,
+    	    success: function(result){
+    	    	$('#detokInput').val(result);
+				$('#tokInput').val("");
+				reloadTransfoDB();
+			},
+			error: function(){
+
+			}
 		})
-		.done(function(result){
-			$('#detokInput').val(result);
-			$('#tokInput').val("");
-			reloadTransfoDB();
-		});
 		return false;
 	};
 
@@ -61,13 +63,18 @@ $(document).ready(Onready);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
-			data: $(this).serialize(),
+			data:  new FormData(this),
+			contentType: false,
+    	    processData:false,
+    	    success: function(result){
+    	    	$('#tokInput').val(result);
+				$('#detokInput').val("");
+				reloadTransfoDB();	
+			},
+			error: function(){
+
+			}
 		})
-		.done(function(result){
-			$('#tokInput').val(result);
-			$('#detokInput').val("");
-			reloadTransfoDB();	
-		});
 		return false;
 	};
 
@@ -76,13 +83,18 @@ $(document).ready(Onready);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
-			data: $(this).serialize(),
+			data:  new FormData(this),
+			contentType: false,
+    	    processData:false,
+    	    success: function(result){
+    	    	$('#decryptInput').val(result);
+				$('#encryptInput').val("");
+				reloadTransfoDB();	
+			},
+			error: function(){
+
+			}
 		})
-		.done(function(result){
-			$('#decryptInput').val(result);
-			$('#encryptInput').val("");
-			reloadTransfoDB();	
-		});
 		return false;
 	};
 
@@ -91,13 +103,18 @@ $(document).ready(Onready);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
-			data: $(this).serialize(),
+			data:  new FormData(this),
+			contentType: false,
+    	    processData:false,
+    	    success: function(result){
+    	    	$('#encryptInput').val(result);
+				$('#decryptInput').val("");
+				reloadTransfoDB();
+			},
+			error: function(){
+
+			}
 		})
-		.done(function(result){
-			$('#encryptInput').val(result);
-			$('#decryptInput').val("");
-			reloadTransfoDB();
-		});
 		return false;
 	};
 
@@ -106,30 +123,39 @@ $(document).ready(Onready);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
-			data: $(this).serialize(),
+			data:  new FormData(this),
+			contentType: false,
+    	    processData:false,
+    	    success: function(result){
+    	    	$('#signToVerifyInput').val($('#signInput').val())
+				$('#verifyInput').val(result);
+				reloadTransfoDB();
+			},
+			error: function(){
+
+			}
 		})
-		.done(function(result){
-			$('#signToVerifyInput').val($('#signInput').val())
-			$('#verifyInput').val(result);
-			reloadTransfoDB();
-		});
 		return false;
 	};
 
 	function OnsubmitVerify(data){
-		stopPropagation(data);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
-			data: $(this).serialize(),
+			data:  new FormData(this),
+			contentType: false,
+    	    processData:false,
+    	    success: function(result){
+    	    	$('#signInput').val($('#signToVerifyInput').val());
+				$('#signToVerifyInput').val("");
+				$('#verifyInput').val("");
+				$('#resultSig').text("Result : " + result);
+				reloadTransfoDB();
+			},
+			error: function(){
+
+			}
 		})
-		.done(function(result){
-			$('#signInput').val($('#signToVerifyInput').val());
-			$('#signToVerifyInput').val("");
-			$('#verifyInput').val("");
-			$('#resultSig').text("Result : " + result);
-			reloadTransfoDB();
-		});
 		return false;
 	};
 
@@ -138,13 +164,18 @@ $(document).ready(Onready);
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),
-			data: $(this).serialize(),
+			data:  new FormData(this),
+			contentType: false,
+    	    processData:false,
+    	    success: function(result){
+    	    	$('#digestInput').val("");
+				$('#resultDigest').text(result);
+				reloadTransfoDB();
+			},
+			error: function(){
+
+			}
 		})
-		.done(function(result){
-			$('#digestInput').val("");
-			$('#resultDigest').text(result);
-			reloadTransfoDB();	
-		});
 		return false;
 	};
 

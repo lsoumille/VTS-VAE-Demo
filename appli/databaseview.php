@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Vormetric Tokenization Server Demo</title>
+        <title>Application Demo</title>
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link href="/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/vormetric.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
                     <?php
                         include '../config.php';
                         
-                        print "Welcome, $user. <a href=\"index.html\">Logout</a>"; 
+                        print "Welcome, $user. <a href=\"/index.html\">Logout</a>"; 
                     ?>
                 </h4>
             </div>
@@ -98,7 +98,7 @@
                   $id = $line['id'];
                   $firstname = $vaeh->decrypt($line['firstname'], $encryption_key);
                   $lastname = $vaeh->decrypt($line['lastname'], $encryption_key);
-                  $birth_date = (($res = $vtsh->detokenize($tokengroup, $line['birthDate'], 'datetemplate', $user, $passwd)) == 'KO' ? $line['birthDate'] : $res);
+                  $birth_date = ($line['birthDate'] !== null ? $vtsh->detokenize($tokengroup, $line['birthDate'], 'datetemplate', $user, $passwd) : $line['expirationDate']);
                   
                   $phone_number = ($line['phoneNumber'] !== null ? $vtsh->detokenize($tokengroup, $line['phoneNumber'], 'phonenumber', $user, $passwd) : $line['phoneNumber']);
                   
@@ -108,7 +108,7 @@
                   $city = ($line['city'] !== null ? $vaeh->decrypt($line['city'], $encryption_key) : $line['city']);
                   $postcode = ($line['postcode'] !== null ? $vtsh->detokenize($tokengroup, $line['postcode'], 'phonenumber', $user, $passwd) : $line['postcode']);
                   $country = $line['country'];
-                  $card_number = ($line['cardNumber'] !== null ? $vtsh->detokenize($tokengroup, $line['cardNumber'], 'cardnumber', $user, $passwd) : $line['cardNumber']);
+                  $card_number = ($line['cardNumber'] !== null ? $vtsh->detokenize($tokengroup, $line['cardNumber'], 'creditcard', $user, $passwd) : $line['cardNumber']);
                   $expiration_date = ($line['expirationDate'] !== null ? $vtsh->detokenize($tokengroup, $line['expirationDate'], 'datetemplate_forcb', $user, $passwd) : $line['expirationDate']);
                   $cvv = ($line['cvv'] !== null ? $vtsh->detokenize($tokengroup, $line['cvv'], 'cvv', $user, $passwd) : $line['cvv']);
                 
@@ -133,6 +133,7 @@
                 print "</table></div>";
             ?>
         </div>
+      </div>  
         <footer>
             <a href=javascript:window.open('https://support.vormetric.com/login');>Support </a><span>|</span>
             <a href=javascript:window.open('http://www.vormetric.com')>About </a><span>|</span>

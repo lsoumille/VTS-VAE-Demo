@@ -57,7 +57,7 @@
                 	<BR>Input to tokenize:  <INPUT  id=\"tokInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
                 	<BR>
                      Format:  
-                	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> Text (FPE)
+                	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> Alphanumeric (FPE)
                 	<input type=\"radio\" name=\"template\" value=\"VTSDemoTokDigits\"> Number (FPE)
                 	<BR><BR>
                 	<input type=\"hidden\" name=\"user\" value=\"$user\">
@@ -74,7 +74,7 @@
                 	<BR>Input to detokenize:  <INPUT  id=\"detokInput\" NAME=\"data\"  size=\"30\" maxlength=\"25\">
                 	<BR>
                      Format:  
-                	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> Text (FPE)
+                	<input type=\"radio\" name=\"template\" value=\"VTSDemoTok\" checked> Alphanumeric (FPE)
                 	<input type=\"radio\" name=\"template\" value=\"VTSDemoTokDigits\"> Number (FPE)
                 	<BR><BR>
                 	<input type=\"hidden\" name=\"user\" value=\"$user\">
